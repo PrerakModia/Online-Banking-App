@@ -41,7 +41,7 @@ const SignUpComponent = () => {
         <input type="text" value={dob} onChange={(event)=>{setDob(event.target.value)}} placeholder="Enter your DOB - DD/MM/YYYY" required/><br />
         <input type="text" value={city} onChange={(event)=>{setCity(event.target.value)}} placeholder="Enter your Current City" required/><br />
         <input type="text" value={state} onChange={(event)=>{setState(event.target.value)}} placeholder="Enter your Current State" required/><br />
-        <input type="text" value={middleName} onChange={(event)=>{setMiddleName(event.target.value)}} defaultValue={""} placeholder="Enter your Middle Name"/><br />
+        <input type="text" value={middleName} onChange={(event)=>{setMiddleName(event.target.value)}} placeholder="Enter your Middle Name"/><br />
         <br></br>
         <button type='submit'>Signup</button>
         &nbsp;&nbsp;&nbsp;
