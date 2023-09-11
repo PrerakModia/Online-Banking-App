@@ -43,6 +43,8 @@ public class Customer {
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Account> accounts;
 	
+	public Customer() {}
+	
 	public Customer(long customerId, String name, String password, long mobile, String email, String aadhar, String dob, String city, String state, String middleName) {
 		this.customerId = customerId;
 		this.name= name;
