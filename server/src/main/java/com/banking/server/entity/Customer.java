@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -16,8 +18,8 @@ import lombok.NonNull;
 @Data
 public class Customer {
 	@Id
-	@NonNull
-	private String customerId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long customerId;
 	@NonNull
 	private String name;
 	@NonNull
@@ -26,8 +28,8 @@ public class Customer {
 	private long mobile;
 	@NonNull
 	private String email;
-	@Column(unique=true, nullable=false)
-	private String aadhar;
+	@NonNull
+	private String aadhar;//add unique here later
 	@NonNull
 	private String dob;
 	@NonNull
