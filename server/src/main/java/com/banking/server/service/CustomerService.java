@@ -12,6 +12,7 @@ public class CustomerService {
 	CustomerRepository customerRepository;
 	
 	public Customer createCustomer(Customer customer) {
+		System.out.println("Inside Service");
 		return customerRepository.save(customer);
 	}
 }
