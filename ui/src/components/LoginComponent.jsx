@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { logInCustomer } from '../utils/auth';
+import Button from '@mui/material/Button';
 
-const Login = () => {
+const Login = ({setMessage}) => {
     const [customerid, setcustomerid] = useState('');
     const [password, setpassword] = useState('');
 
@@ -15,7 +16,7 @@ const Login = () => {
 
     const submitActionHandler = (event) => {
     event.preventDefault();
-    logInCustomer(customerid,password)
+    logInCustomer(customerid,password,setMessage)
   };
 
   const cancelHandler = () =>{
@@ -32,9 +33,9 @@ const Login = () => {
         <input type="password" value={password} onChange={passwordChangeHandler} placeholder="Enter Password" required/><br></br>
     
         <br></br>
-        <button type='submit'>Login</button>
+        <Button variant="contained" onClick={(event)=>submitActionHandler(event)}>Login</Button>
         &nbsp;&nbsp;&nbsp;
-        <button type='reset' onClick={()=>cancelHandler()}>Reset</button>
+        <Button variant="contained" onClick={()=>cancelHandler()}>Reset</Button>
       </form>
   );
 }

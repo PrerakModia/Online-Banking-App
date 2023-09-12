@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
+import "../styles/AccountPage.css";
 
 const AccountPage = () => {
   return (
-    <>
-      <div>My Account</div>
-      <Link to={"/"}>Go Home</Link>
-    </>
+    <div className="AccountPage_container">
+      <p>Hello</p>
+    </div>
   );
 };
 
