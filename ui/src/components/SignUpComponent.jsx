@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { signUpCustomer } from '../utils/auth';
 import "../styles/SignUpComponent.css";
+import Button from '@mui/material/Button';
+
 const SignUpComponent = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -44,9 +46,9 @@ const SignUpComponent = () => {
         <input type="text" value={state} onChange={(event)=>{setState(event.target.value)}} placeholder="Enter your Current State" required/><br />
         <input type="text" value={middleName} onChange={(event)=>{setMiddleName(event.target.value)}} placeholder="Enter your Middle Name"/><br />
         <br></br>
-        <button type='submit'>Signup</button>
+        <Button variant="contained">Signup</Button>
         &nbsp;&nbsp;&nbsp;
-        <button type='reset' onClick={()=>cancelHandler()}>Reset</button>
+        <Button variant="contained" onClick={()=>cancelHandler()}>Reset</Button>
       </form>
       </div>
   );

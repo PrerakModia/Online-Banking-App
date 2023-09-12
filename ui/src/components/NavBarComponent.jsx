@@ -63,13 +63,13 @@ function DrawerAppBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', color: 'red' } }}
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', color: 'white' } }}
           >
             Online Banking Application
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: 'red' }}>
+              <Button key={item} sx={{ color: 'white' }}>
                 {item}
               </Button>
             ))}
