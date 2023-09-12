@@ -14,3 +14,16 @@
 .link:hover {
     color: purple
 }
+.left_side{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+
+}
+.right_side{
+    display: flex;
+    background-color: red;
+    width: 50%;
+    height: 100%;
+
+}

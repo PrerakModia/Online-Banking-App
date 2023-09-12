@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { signUpCustomer } from '../utils/auth';
-
+import "../styles/SignUpComponent.css";
 const SignUpComponent = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -32,6 +32,7 @@ const SignUpComponent = () => {
 
 
   return (
+    <div className='main_container'>
      <form onSubmit={submitActionHandler}>
         <input type="text" value={name} onChange={(event)=>{setName(event.target.value)}} placeholder="Enter your Name" required/><br />
         <input type="password" value={password} onChange={(event)=>{setPassword(event.target.value)}} placeholder="Enter your Password" required/><br />
@@ -47,6 +48,7 @@ const SignUpComponent = () => {
         &nbsp;&nbsp;&nbsp;
         <button type='reset' onClick={()=>cancelHandler()}>Reset</button>
       </form>
+      </div>
   );
 }
 
