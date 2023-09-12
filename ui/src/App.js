@@ -6,6 +6,8 @@ import HomePage from "./pages/HomePage";
 import AccountPage from "./pages/AccountPage";
 import Transactions from "./pages/Transactions";
 import Nav from "./components/NavBarComponent";
+import Error from './pages/ErrorPage';
+import CreateAccount from './pages/CreateAccount';
 function App() {
   const lightTheme = createMuiTheme({
     palette: {
@@ -27,6 +29,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/transaction" element={<Transactions />} />
+          <Route path="/createaccount" element={<CreateAccount />} />
+          <Route path="*" element={<Error/>}/>
         </Routes>
       </BrowserRouter>
     </div>
