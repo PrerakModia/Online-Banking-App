@@ -26,8 +26,8 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long customerId;
 	
-	@Column(name="name",nullable=false)
-	private String name;
+	@Column(name="firstName",nullable=false)
+	private String firstName;
 		
 	@Size(min = 8, max = 12)
 	@Column(name="password",nullable=false)
@@ -52,17 +52,21 @@ public class Customer {
 	private String city;
 	@Column(name="state",nullable=false)
 	private String state;
-	@Column(name="middleName",nullable=false)
-	private String middleName;
+	@Column(name="lastName",nullable=false)
+	private String lastName;
+	@Column(nullable=false)
+	private Double salary;
+	@Column(nullable=false)
+	private String occupation;
 	
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Account> accounts;
 	
 	public Customer() {}
 	
-	public Customer(long customerId, String name, String password, String mobile, String email, String aadhar, String dob, String city, String state, String middleName) {
+	public Customer(long customerId, String firstName, String password, Double salary, String occupation, String mobile, String email, String aadhar, String dob, String city, String state, String lastName) {
 		this.customerId = customerId;
-		this.name= name;
+		this.firstName= firstName;
 		this.password = password;
 		this.mobile= mobile;
 		this.email=email;
@@ -70,10 +74,12 @@ public class Customer {
 		this.dob=dob;
 		this.city=city;
 		this.state=state;
-		this.middleName=middleName;
+		this.lastName=lastName;
+		this.salary = salary;
+		this.occupation=occupation;
 	}
 	
 	public String toString() {
-		return "Customer = customerId : "+this.customerId + " , name : " + this.name + " , password : " + this.password + " , email : " + this.email + ", aadhar : " + this.aadhar + ", dob : " + this.dob + ", city : " + this.city + ", state : " + this.state + ", middleName : " + this.middleName;
+		return "Customer = customerId : "+this.customerId + " , firstName : " + this.firstName + " , lastName : " + this.lastName +", password : " + this.password + " , email : " + this.email + ", aadhar : " + this.aadhar + ", dob : " + this.dob + ", city : " + this.city + ", state : " + this.state + ", salary : " + this.salary + ",occupation : " + this.occupation;
 	}
 }
