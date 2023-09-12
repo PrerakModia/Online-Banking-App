@@ -1,10 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 //import SignupComponent from "../components/SignUpComponent";
 import LoginComponent from "../components/LoginComponent";
 import "../styles/HomePage.css";
 import SignUpComponent from '../components/SignUpComponent';
 
 const HomePage = () => {
+useEffect(()=>{
+  if(window.sessionStorage.getItem("customerId")!=null){
+    window.location.assign("/account");
+  }
+},[]);
+
   const [accExists,setAccExists] = useState(false); //if accExists then show login or else signup
   const [message,setMessage] = useState("");
   return (
