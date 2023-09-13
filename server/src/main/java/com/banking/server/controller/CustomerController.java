@@ -29,8 +29,6 @@ public class CustomerController {
 	
 	@PostMapping
 	public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer){
-		System.out.println("Inside Controller");
-		System.out.println(customer.toString());
 		try {
 			Customer _customer = customerService.createCustomer(customer);
 			return new ResponseEntity<>(_customer,HttpStatus.CREATED);

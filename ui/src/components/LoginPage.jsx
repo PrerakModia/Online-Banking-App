@@ -2,11 +2,13 @@ import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
 import { logInCustomer } from '../utils/auth';
 
-const LoginPage = ({ setMessage }) => {
+const LoginPage = () => {
   const [logInDetails, setLogInDetails] = useState({
     customerid: '',
     password: '',
   });
+
+  const [message,setMessage] = useState("");
 
   const changeHandler = (e, name) => {
     setLogInDetails((prev) => ({ ...prev, [name]: e.target.value }));
@@ -63,7 +65,7 @@ const LoginPage = ({ setMessage }) => {
                 Log In
               </button>
             </form>
-
+            <p className="text-sm mt-4 text-[#6E6D64]">{message}</p>
             <div className="mt-10 grid grid-cols-3 items-center text-gray-500">
               <hr className="border-gray-500" />
               <p className="text-center text-sm">OR</p>
@@ -101,7 +103,7 @@ const LoginPage = ({ setMessage }) => {
             </button>
 
             <div className="mt-10 text-xs border-b py-4">
-              <a>Forgot you Password?</a>
+              <a>Forgot your Password?</a>
             </div>
 
             <div className="text-sm flex justify-between items-center mt-3">
