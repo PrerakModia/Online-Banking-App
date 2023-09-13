@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { logInCustomer } from '../utils/auth';
-
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 const Login = () => {
     const [customerid, setcustomerid] = useState('');
     const [password, setpassword] = useState('');
@@ -28,13 +29,12 @@ const Login = () => {
 
   return (
      <form onSubmit={submitActionHandler}>
-            <input type="text" value={customerid} onChange={customeridChangeHandler} placeholder="Enter your Customer id" required/><br />
-        <input type="password" value={password} onChange={passwordChangeHandler} placeholder="Enter Password" required/><br></br>
-    
+              <TextField id="outlined-basic" sx={{p:2}} variant="outlined" type="text" value={customerid} onChange={customeridChangeHandler} placeholder="Enter your Customer ID"/><br />
+              <TextField id="outlined-basic" sx={{p:2}} variant="outlined" type="password" value={password} onChange={passwordChangeHandler} placeholder="Enter your Password"/><br />
         <br></br>
-        <button type='submit'>Login</button>
+        <Button variant="contained">Login</Button>
         &nbsp;&nbsp;&nbsp;
-        <button type='reset' onClick={()=>cancelHandler()}>Reset</button>
+        <Button variant="contained" onClick={()=>cancelHandler()}>Reset</Button>
       </form>
   );
 }
