@@ -1,6 +1,22 @@
+import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
+import { logInCustomer } from '../utils/auth';
 
-const LoginPage = () => {
+const LoginPage = ({ setMessage }) => {
+  const [logInDetails, setLogInDetails] = useState({
+    customerid: '',
+    password: '',
+  });
+
+  const changeHandler = (e, name) => {
+    setLogInDetails((prev) => ({ ...prev, [name]: e.target.value }));
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    logInCustomer(logInDetails.customerid, logInDetails.password, setMessage);
+  };
+
   return (
     <>
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
@@ -10,12 +26,14 @@ const LoginPage = () => {
             <p className="text-sm mt-4 text-[#6E6D64]">
               If you are already a customer, easily Log In
             </p>
-            <form action="" className="flex flex-col gap-4">
+            <form onSubmit={submitHandler} className="flex flex-col gap-4">
               <input
                 className="p-2 mt-8 rounded-xl borders"
                 type="text"
                 name="customerId"
                 placeholder="Customer ID"
+                value={logInDetails.customerid}
+                onChange={(e) => changeHandler(e, 'customerid')}
               />
               <div className="relative">
                 <input
@@ -23,6 +41,8 @@ const LoginPage = () => {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  value={logInDetails.password}
+                  onChange={(e) => changeHandler(e, 'password')}
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +56,10 @@ const LoginPage = () => {
                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                 </svg>
               </div>
-              <button className="bg-[#6E6D64] rounded-xl text-white py-2 hover:scale-105 duration-300">
+              <button
+                className="bg-[#6E6D64] rounded-xl text-white py-2 hover:scale-105 duration-300"
+                onClick={(e) => submitHandler(e)}
+              >
                 Log In
               </button>
             </form>
