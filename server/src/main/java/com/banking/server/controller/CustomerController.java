@@ -2,6 +2,8 @@ package com.banking.server.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +38,14 @@ public class CustomerController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id){
+		Customer _customer = customerService.getCustomer(id);
+		System.out.println(_customer);
+		if(_customer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(_customer, HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/login")

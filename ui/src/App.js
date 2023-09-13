@@ -6,8 +6,8 @@ import HomePage from "./pages/HomePage";
 import AccountPage from "./pages/AccountPage";
 import Transactions from "./pages/Transactions";
 import Nav from "./components/NavBarComponent";
-import Error from './pages/ErrorPage';
-import CreateAccount from './pages/CreateAccount';
+import Error from "./pages/ErrorPage";
+import CreateAccount from "./pages/CreateAccount";
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -15,27 +15,26 @@ function App() {
       primary: {
         light: "#fff",
         main: "#Ff0000",
-        dark: "#004d40"
-      }
-    }
+        dark: "#004d40",
+      },
+    },
   });
 
   return (
     <ThemeProvider theme={lightTheme}>
-       <div className="App">
-      <Nav/>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/transaction" element={<Transactions />} />
-          <Route path="/createaccount" element={<CreateAccount />} />
-          <Route path="*" element={<Error/>}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
+      <div className="App">
+        <Nav />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/transaction" element={<Transactions />} />
+            <Route path="/createaccount" element={<CreateAccount />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
-   
   );
 }
 
