@@ -24,7 +24,7 @@ const LoginPage = () => {
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
           <div className="md:w-1/2 px-8">
-            <h2 className="font-bold text-2xl text-[#6E6D64]">Login</h2>
+            <h2 className="font-bold text-2xl text-[#6E6D64]">LogIn</h2>
             <p className="text-sm mt-4 text-[#6E6D64]">
               If you are already a customer, easily Log In
             </p>
@@ -108,7 +108,12 @@ const LoginPage = () => {
 
             <div className="text-sm flex justify-between items-center mt-3">
               <p>Don't have an account?</p>
-              <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
+              <button
+                className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
+                onClick={() => {
+                  window.location.assign('/register');
+                }}
+              >
                 Register
               </button>
             </div>
