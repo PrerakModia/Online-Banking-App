@@ -1,10 +1,12 @@
 import instance from "./configuration";
 
-export async function signUpCustomer(name, password, mobile, email, aadhar, dob, city, state, middleName){
+export async function signUpCustomer(firstName, lastName, password, mobile, email, aadhar, dob, city, state, salary, occupation, setMessage){
     const path = "/customer";
+    console.log("Inside signupcustomer auth func")
     console.log(process.env.REACT_APP_BACKEND_URL);
     const customerDets = {
-        name,
+        firstName,
+        lastName,
         password,
         mobile,
         email,
@@ -12,7 +14,8 @@ export async function signUpCustomer(name, password, mobile, email, aadhar, dob,
         dob,
         city,
         state,
-        middleName
+        salary,
+        occupation
     };
     //const jsonCustomerDets = JSON.stringify(customerDets);
     const res = await instance.post(path,customerDets,{
@@ -21,15 +24,20 @@ export async function signUpCustomer(name, password, mobile, email, aadhar, dob,
         }
     }).then((resp)=>{
         console.log(resp);
-        alert("Customer Registration Successful!");
+        window.sessionStorage.setItem("customerId", resp.data.customerId);
+        setMessage("Customer Registration Successful!");
+        window.location.assign("/account");
     }).catch((err)=>{
         console.log(err);
-        alert("error==="+err);
+        setMessage("error==="+err);
     });
+    setTimeout(()=>{
+        setMessage("");
+    },5000);
     return;
 }
 
-export async function logInCustomer(customerId, password){
+export async function logInCustomer(customerId, password, setMessage){
     const path = "/customer/login";
     const loginDets = {
         customerId,
@@ -42,10 +50,15 @@ export async function logInCustomer(customerId, password){
         }
     }).then((resp)=>{
         console.log(resp);
-        alert(resp.data);
+        setMessage(resp.data);
+        window.sessionStorage.setItem("customerId", customerId);
+        window.location.assign("/account");
     }).catch((err)=>{
         console.log(err);
-        alert("error==="+err);
+        setMessage("error==="+err);
     });
+    setTimeout(()=>{
+        setMessage("");
+    },5000);
     return;
 }

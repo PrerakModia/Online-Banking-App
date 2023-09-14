@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ThemeProvider, createMuiTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import HomePage from "./pages/HomePage";
 import AccountPage from "./pages/AccountPage";
@@ -9,7 +9,7 @@ import Nav from "./components/NavBarComponent";
 import Error from './pages/ErrorPage';
 import CreateAccount from './pages/CreateAccount';
 function App() {
-  const lightTheme = createMuiTheme({
+  const lightTheme = createTheme({
     palette: {
       type: "light",
       primary: {

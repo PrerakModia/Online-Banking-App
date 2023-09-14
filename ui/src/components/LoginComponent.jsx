@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import { logInCustomer } from '../utils/auth';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-const Login = () => {
+import { TextField } from '@mui/material';
+const Login = ({setMessage}) => {
     const [customerid, setcustomerid] = useState('');
     const [password, setpassword] = useState('');
 
@@ -16,7 +16,7 @@ const Login = () => {
 
     const submitActionHandler = (event) => {
     event.preventDefault();
-    logInCustomer(customerid,password)
+    logInCustomer(customerid,password,setMessage)
   };
 
   const cancelHandler = () =>{
@@ -32,7 +32,7 @@ const Login = () => {
               <TextField id="outlined-basic" sx={{p:2}} variant="outlined" type="text" value={customerid} onChange={customeridChangeHandler} placeholder="Enter your Customer ID"/><br />
               <TextField id="outlined-basic" sx={{p:2}} variant="outlined" type="password" value={password} onChange={passwordChangeHandler} placeholder="Enter your Password"/><br />
         <br></br>
-        <Button variant="contained">Login</Button>
+        <Button variant="contained" onClick={(event)=>submitActionHandler(event)}>Login</Button>
         &nbsp;&nbsp;&nbsp;
         <Button variant="contained" onClick={()=>cancelHandler()}>Reset</Button>
       </form>
