@@ -3,6 +3,23 @@ import bgImage from '../assets/5.jpg';
 
 const RegisterPage = () => {
   const [page, setPage] = useState(true);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    password: '',
+    mobileNumber: '',
+    email: '',
+    aadhar: '',
+    dob: '',
+    city: '',
+    state: '',
+    salary: '',
+    occupation: '',
+  });
+
+  const changeHandler = (e, name) => {
+    setFormData((prev) => ({ ...prev, [name]: e.target.value }));
+  };
 
   return (
     <>
@@ -22,16 +39,16 @@ const RegisterPage = () => {
                       type="text"
                       name="firstName"
                       placeholder="First Name"
-                      // value={logInDetails.customerid}
-                      // onChange={(e) => changeHandler(e, 'customerid')}
+                      value={formData.firstName}
+                      onChange={(e) => changeHandler(e, 'firstName')}
                     />
                     <input
                       className="p-2 mt-8 rounded-xl borders w-1/2"
                       type="text"
                       name="lastName"
                       placeholder="Last Name"
-                      // value={logInDetails.customerid}
-                      // onChange={(e) => changeHandler(e, 'customerid')}
+                      value={formData.lastName}
+                      onChange={(e) => changeHandler(e, 'lastName')}
                     />
                   </div>
                   <div className="relative">
@@ -40,8 +57,8 @@ const RegisterPage = () => {
                       type="password"
                       name="password"
                       placeholder="Password"
-                      //   value={logInDetails.password}
-                      //   onChange={(e) => changeHandler(e, 'password')}
+                      value={formData.password}
+                      onChange={(e) => changeHandler(e, 'password')}
                     />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -61,24 +78,24 @@ const RegisterPage = () => {
                     type="number"
                     name="mobile"
                     placeholder="Mobile Number"
-                    // value={logInDetails.customerid}
-                    // onChange={(e) => changeHandler(e, 'customerid')}
+                    value={formData.mobileNumber}
+                    onChange={(e) => changeHandler(e, 'mobileNumber')}
                   />
                   <input
                     className="p-2 rounded-xl borders"
                     type="email"
                     name="email"
                     placeholder="Email Address"
-                    // value={logInDetails.customerid}
-                    // onChange={(e) => changeHandler(e, 'customerid')}
+                    value={formData.email}
+                    onChange={(e) => changeHandler(e, 'email')}
                   />
                   <input
                     className="p-2 rounded-xl borders"
                     type="number"
                     name="aadhar"
                     placeholder="Aadhar Number"
-                    // value={logInDetails.customerid}
-                    // onChange={(e) => changeHandler(e, 'customerid')}
+                    value={formData.aadhar}
+                    onChange={(e) => changeHandler(e, 'aadhar')}
                   />
 
                   <button
@@ -97,8 +114,8 @@ const RegisterPage = () => {
                     type="date"
                     name="dob"
                     placeholder="Date of Birth"
-                    // value={logInDetails.customerid}
-                    // onChange={(e) => changeHandler(e, 'customerid')}
+                    value={formData.dob}
+                    onChange={(e) => changeHandler(e, 'dob')}
                   />
 
                   <div className="flex gap-4">
@@ -107,16 +124,16 @@ const RegisterPage = () => {
                       type="text"
                       name="city"
                       placeholder="City"
-                      // value={logInDetails.customerid}
-                      // onChange={(e) => changeHandler(e, 'customerid')}
+                      value={formData.city}
+                      onChange={(e) => changeHandler(e, 'city')}
                     />
                     <input
                       className="p-2 rounded-xl borders w-1/2"
                       type="text"
                       name="state"
                       placeholder="State"
-                      // value={logInDetails.customerid}
-                      // onChange={(e) => changeHandler(e, 'customerid')}
+                      value={formData.state}
+                      onChange={(e) => changeHandler(e, 'state')}
                     />
                   </div>
 
@@ -125,8 +142,8 @@ const RegisterPage = () => {
                     type="text"
                     name="salary"
                     placeholder="Salary"
-                    // value={logInDetails.customerid}
-                    // onChange={(e) => changeHandler(e, 'customerid')}
+                    value={formData.salary}
+                    onChange={(e) => changeHandler(e, 'salary')}
                   />
 
                   <input
@@ -134,8 +151,8 @@ const RegisterPage = () => {
                     type="text"
                     name="occupation"
                     placeholder="Occupation"
-                    // value={logInDetails.customerid}
-                    // onChange={(e) => changeHandler(e, 'customerid')}
+                    value={formData.occupation}
+                    onChange={(e) => changeHandler(e, 'occupation')}
                   />
 
                   <div class="flex items-center mb-4">
