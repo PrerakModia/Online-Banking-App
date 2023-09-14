@@ -2,11 +2,14 @@ package com.banking.server.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.banking.server.repository.CustomerRepository;
 import com.banking.server.entity.Customer;
+import com.banking.server.entity.Account;
 import com.banking.server.entity.LoginModel;
 
 @Service
@@ -27,6 +30,12 @@ public class CustomerService {
 		} else {
 			return null;
 		}
+	}
+	
+	public List<Account> getAccounts(long id){
+		Customer c = getCustomer(id);
+		if(c==null) return null;
+		return c.getAccounts();
 	}
 	
 	public String validateCustomer(LoginModel customer) {

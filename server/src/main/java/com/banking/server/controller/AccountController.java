@@ -1,5 +1,7 @@
 package com.banking.server.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banking.server.entity.Account;
 import com.banking.server.entity.Customer;
+import com.banking.server.entity.Transaction;
 import com.banking.server.entity.WithdrawModel;
 import com.banking.server.service.AccountService;
 
@@ -33,6 +36,11 @@ public class AccountController {
 	@GetMapping("/{address}")
 	public ResponseEntity<Object> getIFSC(@PathVariable("address") String address){
 		return accountService.getIFSC();
+	}
+	
+	@GetMapping("/transactions/{accId}")
+	public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("accId") Long accId){
+		return accountService.getTransactions(accId);
 	}
 	
 	@PutMapping("/withdraw")

@@ -72,6 +72,21 @@ public class AccountService {
 		
 	}
 	
+	public Account getAccount(long id) {
+		Optional<Account> obj = accountRepository.findById(id);
+		if(obj.isPresent()) {
+			return obj.get();
+		} else {
+			return null;
+		}
+	}
+	
+	public ResponseEntity<List<Transaction>> getTransactions(Long accId){
+		Account acc = getAccount(accId);
+		if(acc==null) return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(acc.getTransactions(),HttpStatus.OK);
+	}
+	
 	@Transactional
 	public String withdraw(WithdrawModel model) {
 		System.out.println("Inside withdraw service");

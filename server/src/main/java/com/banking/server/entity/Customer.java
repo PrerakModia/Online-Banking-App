@@ -14,6 +14,9 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -59,6 +62,7 @@ public class Customer {
 	@Column(nullable=false)
 	private String occupation;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Account> accounts;
 	

@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.NonNull;
 
@@ -30,7 +32,8 @@ public class Transaction {
 	
 	public Transaction() {}
 	
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="accountNumber")
+	@JoinColumn(name="accNumber")
 	private Account account;
 }
