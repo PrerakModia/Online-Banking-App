@@ -11,12 +11,9 @@ export async function signUpCustomer(
   city,
   state,
   salary,
-  occupation,
-  setMessage
+  occupation
 ) {
   const path = "/customer";
-  console.log("Inside signupcustomer auth func");
-  console.log(process.env.REACT_APP_BACKEND_URL);
   const customerDets = {
     firstName,
     lastName,
@@ -41,20 +38,15 @@ export async function signUpCustomer(
     .then((resp) => {
       console.log(resp);
       window.sessionStorage.setItem("customerId", resp.data.customerId);
-      setMessage("Customer Registration Successful!");
-      window.location.assign("/account");
+      window.location.assign("/dashboard");
     })
     .catch((err) => {
       console.log(err);
-      setMessage("error===" + err);
     });
-  setTimeout(() => {
-    setMessage("");
-  }, 5000);
   return;
 }
 
-export async function logInCustomer(customerId, password, setMessage) {
+export async function logInCustomer(customerId, password) {
   const path = "/customer/login";
   const loginDets = {
     customerId,
@@ -69,17 +61,17 @@ export async function logInCustomer(customerId, password, setMessage) {
     })
     .then((resp) => {
       console.log(resp);
-      setMessage(resp.data);
+      // setMessage(resp.data);
       window.sessionStorage.setItem("customerId", customerId);
-      window.location.assign("/account");
+      window.location.assign("/dashboard");
     })
     .catch((err) => {
       console.log(err);
-      setMessage("error===" + err);
+      // setMessage("error===" + err);
     });
-  setTimeout(() => {
-    setMessage("");
-  }, 5000);
+  // setTimeout(() => {
+  //   setMessage("");
+  // }, 5000);
   return;
 }
 
