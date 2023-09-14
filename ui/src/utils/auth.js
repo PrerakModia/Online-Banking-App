@@ -104,6 +104,30 @@ export async function getCustomer(customerId, setFormData) {
     .catch((err) => console.log(err));
 }
 
+export async function getAccounts(custId,setAccounts) {
+  const path = `customer/accounts/${custId}`;
+  const res = await instance.get(path,{
+    headers: { "Content-Type": "application/json" }
+  })
+  .then((res)=>{
+    setAccounts(res.data);
+    console.log(res);
+  })
+}
+
+export async function getTransactions(accId,setTransactions) {
+  const path = `account/transactions/${accId}`;
+  const res = await instance.get(path,{
+    headers: { "Content-Type": "application/json" }
+  })
+  .then((res)=>{
+    setTransactions(res.data);
+    console.log(res);
+  })
+}
+
+
+
 export async function getIFSC(address, setFormData) {
   const path = `account/${address}`;
   const res = await instance
