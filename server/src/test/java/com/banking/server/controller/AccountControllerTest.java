@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.banking.server.entity.Account;
+import com.banking.server.entity.WithdrawModel;
 import com.banking.server.service.AccountService;
 import com.banking.server.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,6 +72,19 @@ public class AccountControllerTest {
 		Mockito.when(accountService.getIFSC()).thenReturn(new ResponseEntity<Object>(map, HttpStatus.OK));
 		MvcResult result = mvc.perform(get("/account/address")).andExpect(status().isOk()).andReturn();
 		Assertions.assertEquals(json,result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void withdrawAmountTest() throws Exception {
+		WithdrawModel model = new WithdrawModel();
+		model.setAccNumber(34567);
+		model.setAmount(500.00);
+		String json = mapper.writeValueAsString(model);
+		Mockito.when(accountService.withdraw(ArgumentMatchers.any())).thenReturn("Transaction Success");
+		MvcResult result = mvc.perform(put("/account/withdraw").
+				contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+				.content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
+		Assertions.assertEquals("Transaction Success",result.getResponse().getContentAsString());
 	}
 	
 }
