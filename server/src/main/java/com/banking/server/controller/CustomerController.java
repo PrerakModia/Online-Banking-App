@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.banking.server.service.CustomerService;
 import com.banking.server.entity.Customer;
+import com.banking.server.entity.Account;
 import com.banking.server.entity.LoginModel;
 
 @RestController
@@ -44,6 +47,13 @@ public class CustomerController {
 		System.out.println(_customer);
 		if(_customer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<>(_customer, HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/accounts/{id}")
+	public ResponseEntity<List<Account>> getAccounts(@PathVariable("id") long id){
+		List<Account> accs = customerService.getAccounts(id);
+		if(accs==null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<List<Account>>(accs,HttpStatus.OK);
 	}
 	
 	@PostMapping("/login")

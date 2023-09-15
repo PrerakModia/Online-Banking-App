@@ -2,19 +2,26 @@ package com.banking.server.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.NonNull;
 
 @Entity
 @Data
+@Table(name="account")
 public class Account {
 	@Id
 	private long accNumber;
@@ -36,11 +43,12 @@ public class Account {
 	private boolean isNetBanking;
 	
 	
-	@OneToMany
-	@JoinColumn(name="accNumber")
+	@JsonManagedReference
+	@OneToMany(mappedBy="account", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Transaction> transactions;
 	
-	@ManyToOne
+	@JsonBackReference
+	@ManyToOne()
 	@JoinColumn(name="customerId")
 	private Customer customer;
 	
