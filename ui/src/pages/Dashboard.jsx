@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Dashboard.css'
 const Dashboard = () => {
     return (
-        <div>
+        <div className='dashboard-body'>
             <div class="app">
 	<header class="app-header">
 		<div class="app-header-logo">

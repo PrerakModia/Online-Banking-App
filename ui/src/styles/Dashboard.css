@@ -27,7 +27,7 @@ select{
 	--c-text-tertiary: var(--c-gray-500);
 }
 
-body {
+.dashboard-body {
 	line-height: 1.5;
 	min-height: 100vh;
 	font-family: "Be Vietnam Pro", sans-serif;
@@ -45,7 +45,7 @@ body {
 	box-sizing: border-box;
 }
 
-img {
+.dashboard-body img {
 	display: block;
 	max-width: 25%;
     border-radius: 50%;
