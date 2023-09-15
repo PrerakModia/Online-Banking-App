@@ -20,6 +20,15 @@ public class CustomerService {
 		return customerRepository.save(customer);
 	}
 	
+	public Customer getCustomer(long id) {
+		Optional<Customer> obj = customerRepository.findById(id);
+		if(obj.isPresent()) {
+			return obj.get();
+		} else {
+			return null;
+		}
+	}
+	
 	public String validateCustomer(LoginModel customer) {
 		Customer c=null;
 		String response= "";

@@ -17,7 +17,6 @@ import lombok.NonNull;
 @Data
 public class Account {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long accNumber;
 	@NonNull
 	private String accType;
@@ -30,6 +29,13 @@ public class Account {
 	@NonNull
 	private String openingDate;
 	
+	private boolean isCreditCard;
+	
+	private boolean isDebitCard;
+	
+	private boolean isNetBanking;
+	
+	
 	@OneToMany
 	@JoinColumn(name="accNumber")
 	private List<Transaction> transactions;
@@ -37,4 +43,6 @@ public class Account {
 	@ManyToOne
 	@JoinColumn(name="customerId")
 	private Customer customer;
+	
+	public Account() {}
 }
