@@ -9,19 +9,10 @@ import Error from "./pages/ErrorPage";
 import CreateAccount from "./pages/CreateAccount";
 import RegisterPage from "./components/RegisterPage";
 
-<<<<<<< HEAD
 import HomePage from './pages/HomePage';
-import AccountPage from './pages/AccountPage';
-import Transactions from './pages/Transactions';
-import LoginPage from './components/LoginPage';
+// import AccountPage from './pages/AccountPage';
 import Nav from './components/NavBarComponent';
-import Error from './pages/ErrorPage';
-import CreateAccount from './pages/CreateAccount';
-import RegisterPage from './components/RegisterPage';
-import dashboard from './pages/Dashboard';
-import Dashboard from './pages/Dashboard';
-=======
->>>>>>> e019638535a8f7dfdad2070e8033fbedba543674
+import AccountStatement from './pages/AccountStatement';
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -45,6 +36,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction" element={<Transactions />} />
             <Route path="/createaccount" element={<CreateAccount />} />
+            <Route path="/accountstatement" element={<AccountStatement />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<Error />} />
           </Routes>

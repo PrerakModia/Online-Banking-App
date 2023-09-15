@@ -34,8 +34,8 @@ body {
 	background-color: var(--c-gray-900);
 	color: var(--c-text-primary);
 	display: flex;
-	padding-top: 3vw;
-	padding-bottom: 3vw;
+	/* padding-top: 3vw;
+	padding-bottom: 3vw; */
 	justify-content: center;
 }
 
@@ -71,10 +71,10 @@ a {
 
 .app {
 	min-height: 80vh;
-	width: 95%;
-	max-width: 1600px;
+	/* width: 95%; */
+	/* max-width: 1600px; */
 	background-color: var(--c-gray-800);
-	padding: 2vw 4vw 6vw;
+	/* padding: 2vw 4vw 6vw; */
 	display: flex;
 	flex-direction: column;
 }
@@ -112,12 +112,12 @@ a {
 .app-header-actions-buttons {
 	display: flex;
 	border-left: 1px solid var(--c-gray-600);
-	margin-left: 2rem;
+	/* margin-left: 2rem;
 	padding-left: 2rem;
 
 	& > * + * {
 		margin-left: 1rem;
-	}
+	} */
 }
 
 .app-header-mobile {

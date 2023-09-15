@@ -100,22 +100,7 @@ const Dashboard = () => {
 		<div class="app-body-main-content">
 			<section class="service-section">
 				<h2>Service</h2>
-				<div class="service-section-header">
-					<div class="search-field">
-						<i class="ph-magnifying-glass"></i>
-						<input type="text" placeholder="Account number" />
-					</div>
-					<div class="dropdown-field">
-						<select>
-							<option>Home</option>
-							<option>Work</option>
-						</select>
-						<i class="ph-caret-down"></i>
-					</div>
-					<button class="flat-button">
-						Search
-					</button>
-				</div>
+				
 				<div class="mobile-only">
 					<button class="flat-button">
 						Toggle search
@@ -174,16 +159,8 @@ const Dashboard = () => {
 			</section>
 			<section class="transfer-section">
 				<div class="transfer-section-header">
-					<h2>Latest transfers</h2>
-					<div class="filter-options">
-						<p>Filter selected: more than 100 $</p>
-						<button class="icon-button">
-							<i class="ph-funnel"></i>
-						</button>
-						<button class="icon-button">
-							<i class="ph-plus"></i>
-						</button>
-					</div>
+					<h2>Latest Transactions</h2>
+					
 				</div>
 				<div class="transfers">
 					<div class="transfer">
@@ -334,22 +311,7 @@ const Dashboard = () => {
 						</div>
 					</div>
 				</div>
-				<div class="faq">
-					<p>Most frequently asked questions</p>
-					<div>
-						<label>Question</label>
-						<input type="text" placeholder="Type here" />
-					</div>
-				</div>
-				<div class="payment-section-footer">
-					<button class="save-button">
-						Save
-					</button>
-					<button class="settings-button">
-						<i class="ph-gear"></i>
-						<span>More settings</span>
-					</button>
-				</div>
+				
 			</section>
 		</div>
 	</div>
