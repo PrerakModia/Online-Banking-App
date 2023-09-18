@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banking.server.entity.Account;
 import com.banking.server.entity.Customer;
+import com.banking.server.entity.FundTransferModel;
 import com.banking.server.entity.Transaction;
 import com.banking.server.entity.WithdrawModel;
 import com.banking.server.service.AccountService;
@@ -40,6 +41,7 @@ public class AccountController {
 	
 	@GetMapping("/transactions/{accId}")
 	public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("accId") Long accId){
+		System.out.println("INSIDE TRANSACTION CONTROLLER");
 		return accountService.getTransactions(accId);
 	}
 	
@@ -47,6 +49,16 @@ public class AccountController {
 	public String withdrawAmount(@RequestBody WithdrawModel model) {
 		System.out.println("Inside withdraw controller");
 		return accountService.withdraw(model);
+	}
+	
+	@PutMapping("/deposit")
+	public String depositAmount(@RequestBody WithdrawModel model) {
+		return accountService.deposit(model);
+	}
+	
+	@PutMapping("/fundTransfer")
+	public String fundTransfer(@RequestBody FundTransferModel model) {
+		return accountService.fundTransfer(model);
 	}
 
 }

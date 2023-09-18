@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.banking.server.entity.Account;
 import com.banking.server.entity.Customer;
+import com.banking.server.entity.FundTransferModel;
 import com.banking.server.entity.Transaction;
 import com.banking.server.entity.WithdrawModel;
 import com.banking.server.repository.AccountRepository;
@@ -84,35 +85,81 @@ public class AccountService {
 	
 	@Transactional
 	public String withdraw(WithdrawModel model) {
-		System.out.println("Inside withdraw service");
 		String result = "";
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
 		Account account = accountRepository.findById(model.getAccNumber()).get();
-		System.out.println(account);
-		if(account.getBalance()-model.getAmount()<0) {
-			result = "Transaction Failed due to Insufficient Balance";
-		}
+		if(account.getBalance()-model.getAmount()<0)
+			result = "Transaction Failed due to insufficient balance";
 		else {
-			System.out.println(account.getBalance()-model.getAmount());
-			int rowsAffected = accountRepository.withdraw(model.getAmount(),model.getAccNumber());
-			if(rowsAffected>0) {
-				System.out.println("rows affected");
+			int rowsAffected = accountRepository.withdraw(model.getAmount(), model.getAccNumber());
+			if(rowsAffected>0)
 				result = "Transaction Success";
-				Transaction transaction = new Transaction();
-				transaction.setAccount(account);
-				transaction.setAmount(model.getAmount());
-				transaction.setDebitAccount(model.getAccNumber());
-				transaction.setStatus("Success");
-				transaction.setTxnType("Withdraw");
-				transaction.setTimeStamp(df.format(new Date()));
-				transactionRepository.save(transaction);
-				System.out.println("Transaction table created");
-				
-			}
-			else {
+			else
 				result = "Transaction Failed";
+		}
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
+		Transaction transaction = new Transaction();
+		transaction.setAccount(account);
+		transaction.setAmount(model.getAmount());
+		transaction.setDebitAccount(model.getAccNumber());
+		transaction.setStatus(result);
+		transaction.setTxnType("Withdraw");
+		transaction.setTimeStamp(df.format(new Date()));
+		transactionRepository.save(transaction);
+		return result;
+	}
+	
+	@Transactional
+	public String deposit(WithdrawModel model) {
+		String result = "";
+		Account account = accountRepository.findById(model.getAccNumber()).get();
+		int rowsAffected = accountRepository.deposit(model.getAmount(), model.getAccNumber());
+		if(rowsAffected>0)
+			result = "Transaction Success";
+		else 
+			result = "Transaction Failed";
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
+		Transaction transaction = new Transaction();
+		transaction.setAccount(account);
+		transaction.setAmount(model.getAmount());
+		transaction.setCreditAccount(model.getAccNumber());
+		transaction.setStatus(result);
+		transaction.setTxnType("Deposit");
+		transaction.setTimeStamp(df.format(new Date()));
+		transactionRepository.save(transaction);
+		return result;
+		
+	}
+	
+	@Transactional
+	public String fundTransfer(FundTransferModel model) {
+		String result = "";
+		Account debitAccount = accountRepository.findById(model.getFromAccountNo()).get();
+		Optional<Account> creditAccount = accountRepository.findById(model.getToAccountNo());
+		System.out.println(creditAccount);
+		if(!creditAccount.isPresent())
+			result = "Receivers account Not Found";
+		else {
+			if(debitAccount.getBalance()-model.getAmount() < 0)
+				result = "Transaction Failed due to insufficient Balance";
+			else {
+				int debitRows = accountRepository.withdraw(model.getAmount(), model.getFromAccountNo());
+				int creditRows = accountRepository.deposit(model.getAmount(), model.getToAccountNo());
+				if(debitRows>0 && creditRows >0)
+					result = "Transaction Success";
+				else
+					result = "Transaction Failed";
 			}
 		}
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
+		Transaction transaction = new Transaction();
+		transaction.setAccount(debitAccount);
+		transaction.setAmount(model.getAmount());
+		transaction.setCreditAccount(model.getToAccountNo());
+		transaction.setDebitAccount(model.getFromAccountNo());
+		transaction.setStatus(result);
+		transaction.setTxnType("FundTransfer");
+		transaction.setTimeStamp(df.format(new Date()));
+		transactionRepository.save(transaction);
 		return result;
 	}
 }

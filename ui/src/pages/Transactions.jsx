@@ -53,7 +53,7 @@ const Transactions = () => {
           onChange={handleChange}
         >
           {accounts.map((elem)=>{
-            return <MenuItem value={elem.accNumber}>{elem.accType} - {elem.accNumber}</MenuItem>;
+            return <MenuItem key={elem.accNumber} value={elem.accNumber}>{elem.accType} - {elem.accNumber}</MenuItem>;
           })}
         </Select>
     </FormControl>
