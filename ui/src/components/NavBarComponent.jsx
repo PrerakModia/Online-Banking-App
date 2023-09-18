@@ -58,6 +58,7 @@ function DrawerAppBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    <div className="Nav_body">
     <Box sx={{ display: 'flex', position: 'absolute'}}>
       <CssBaseline />
       <AppBar component="nav">
@@ -108,6 +109,7 @@ function DrawerAppBar(props) {
         <Toolbar />
       </Box>
     </Box>
+    </div>
   );
 }
 

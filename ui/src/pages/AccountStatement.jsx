@@ -7,8 +7,11 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import '../styles/AccountStatement.css';
+import Nav from '../components/NavBarComponent';
 export default function AlignItemsList() {
   return (
+    <div>
+      <Nav/>
     <List sx={{ width: '100%', maxWidth: '100%', bgcolor: '#1f1f1f' }}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
@@ -180,5 +183,6 @@ export default function AlignItemsList() {
       <Divider variant="inset" component="li" />
       
     </List>
+    </div>
   );
 }
