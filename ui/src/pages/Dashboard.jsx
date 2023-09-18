@@ -1,59 +1,12 @@
 import React from 'react';
 import '../styles/Dashboard.css'
+import Nav from '../components/NavBarComponent';
 const Dashboard = () => {
     return (
         <div className='dashboard-body'>
+			<Nav/>
             <div class="app">
 	<header class="app-header">
-		<div class="app-header-logo">
-			<div class="logo">
-				<span class="logo-icon">
-					<img src="https://assets.codepen.io/285131/almeria-logo.svg" />
-				</span>
-				<h1 class="logo-title">
-					<span>Online Banking App</span>
-					<span></span>
-				</h1>
-			</div>
-		</div>
-		<div class="app-header-navigation">
-			<div class="tabs">
-				<a href="#">
-					Overview
-				</a>
-				<a href="#" class="active">
-					Payments
-				</a>
-				<a href="#">
-					Cards
-				</a>
-				<a href="#">
-					Account
-				</a>
-				<a href="#">
-					System
-				</a>
-				<a href="#">
-					Business
-				</a>
-			</div>
-		</div>
-		<div class="app-header-actions">
-			<button class="user-profile">
-				<span style={{marginRight:'1em'}}>Matheo Peterson</span>
-				<span>
-					<img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
-				</span>
-			</button>
-			<div class="app-header-actions-buttons">
-				<button class="icon-button large">
-					<i class="ph-magnifying-glass"></i>
-				</button>
-				<button class="icon-button large">
-					<i class="ph-bell"></i>
-				</button>
-			</div>
-		</div>
 		<div class="app-header-mobile">
 			<button class="icon-button large">
 				<i class="ph-list"></i>
@@ -70,32 +23,19 @@ const Dashboard = () => {
 				</a>
 				<a href="#">
 					<i class="ph-check-square"></i>
-					<span>Scheduled</span>
+					<span>Statement</span>
 				</a>
 				<a href="#">
 					<i class="ph-swap"></i>
-					<span>Transfers</span>
+					<span>Withdraw Money</span>
 				</a>
 				<a href="#">
 					<i class="ph-file-text"></i>
-					<span>Templates</span>
+					<span>Account Summary</span>
 				</a>
-				<a href="#">
-					<i class="ph-globe"></i>
-					<span>SWIFT</span>
-				</a>
-				<a href="#">
-					<i class="ph-clipboard-text"></i>
-					<span>Exchange</span>
-				</a>
+				
 			</nav>
-			{/* <footer class="footer">
-				<h1>Almeria<small>©</small></h1>
-				<div>
-					Almeria ©<br />
-					All Rights Reserved 2021
-				</div>
-			</footer> */}
+			
 		</div>
 		<div class="app-body-main-content">
 			<section class="service-section">
