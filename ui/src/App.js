@@ -10,6 +10,7 @@ import CreateAccount from './pages/CreateAccount';
 import RegisterPage from './components/RegisterPage';
 
 // import AccountPage from './pages/AccountPage';
+
 import AccountStatement from './pages/AccountStatement';
 import Withdraw from './pages/Withdraw';
 function App() {
@@ -27,6 +28,7 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <div>
+        {/* <Nav /> */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LoginPage />} />

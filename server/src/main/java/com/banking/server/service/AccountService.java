@@ -85,6 +85,7 @@ public class AccountService {
 	
 	@Transactional
 	public String withdraw(WithdrawModel model) {
+		System.out.println(model.toString());
 		String result = "";
 		Account account = accountRepository.findById(model.getAccNumber()).get();
 		if(account.getBalance()-model.getAmount()<0)

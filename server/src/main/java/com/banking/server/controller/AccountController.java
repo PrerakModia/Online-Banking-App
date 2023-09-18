@@ -47,6 +47,7 @@ public class AccountController {
 	
 	@PutMapping("/withdraw")
 	public String withdrawAmount(@RequestBody WithdrawModel model) {
+		System.out.println();
 		System.out.println("Inside withdraw controller");
 		return accountService.withdraw(model);
 	}

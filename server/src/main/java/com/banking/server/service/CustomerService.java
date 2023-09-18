@@ -31,6 +31,23 @@ public class CustomerService {
 			return null;
 		}
 	}
+
+	public String resetPassword(LoginModel loginModel, String otp){
+		Optional<Customer> obj = customerRepository.findById(loginModel.getCustomerId());
+		Customer customer = null;
+		if(obj.isPresent())
+		{
+			if(otp.equals("123456")){
+				obj.get().setPassword(loginModel.getPassword());
+				customerRepository.save(obj.get());
+				return "Password changed successfully!";
+			} else
+				return "Invalid OTP";
+		}
+		else {
+			return "Invalid Customer";
+		}
+	}
 	
 	public List<Account> getAccounts(long id){
 		Customer c = getCustomer(id);

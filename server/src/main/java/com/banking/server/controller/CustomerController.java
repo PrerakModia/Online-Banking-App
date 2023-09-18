@@ -1,12 +1,6 @@
 package com.banking.server.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,5 +54,10 @@ public class CustomerController {
 	public String validateCustomer(@Valid @RequestBody LoginModel customer) {
 		System.out.println("Inside login");
 		return customerService.validateCustomer(customer);
+	}
+
+	@PutMapping("/resetPassword/{OTP}")
+	public String changePassword(@RequestBody LoginModel loginModel, @PathVariable("OTP") String otp){
+		return customerService.resetPassword(loginModel, otp);
 	}
 }

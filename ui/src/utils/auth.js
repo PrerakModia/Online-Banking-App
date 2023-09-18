@@ -1,4 +1,6 @@
-import instance from "./configuration";
+import { async } from 'q';
+import instance from './configuration';
+import axios from 'axios';
 
 export async function signUpCustomer(
   firstName,
@@ -13,7 +15,7 @@ export async function signUpCustomer(
   salary,
   occupation
 ) {
-  const path = "/customer";
+  const path = '/customer';
   const customerDets = {
     firstName,
     lastName,
@@ -32,13 +34,13 @@ export async function signUpCustomer(
   const res = await instance
     .post(path, customerDets, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
     .then((resp) => {
       console.log(resp);
-      window.sessionStorage.setItem("customerId", resp.data.customerId);
-      window.location.assign("/dashboard");
+      window.sessionStorage.setItem('customerId', resp.data.customerId);
+      window.location.assign('/dashboard');
     })
     .catch((err) => {
       console.log(err);
@@ -47,7 +49,7 @@ export async function signUpCustomer(
 }
 
 export async function logInCustomer(customerId, password) {
-  const path = "/customer/login";
+  const path = '/customer/login';
   const loginDets = {
     customerId,
     password,
@@ -56,14 +58,14 @@ export async function logInCustomer(customerId, password) {
   const res = await instance
     .post(path, loginDets, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
     .then((resp) => {
       console.log(resp);
       // setMessage(resp.data);
-      window.sessionStorage.setItem("customerId", customerId);
-      window.location.assign("/dashboard");
+      window.sessionStorage.setItem('customerId', customerId);
+      window.location.assign('/dashboard');
     })
     .catch((err) => {
       console.log(err);
@@ -80,66 +82,67 @@ export async function getCustomer(customerId, setFormData) {
   console.log(path);
   const res = await instance
     .get(path, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     })
     .then((res) => {
-      const date = new Date();
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      let currentDate = `${day}-${month}-${year}`;
-      setFormData({
-        name: res.data.firstName,
-        customerId: customerId,
-        date: currentDate,
-        address: "",
-        ifsc: "",
-        branch: "",
-        type: "",
-        credit: false,
-        debit: false,
-        netBanking: false,
-      });
+      setFormData(res.data);
+      // const date = new Date();
+      // let day = date.getDate();
+      // let month = date.getMonth() + 1;
+      // let year = date.getFullYear();
+      // let currentDate = `${day}-${month}-${year}`;
+      // setFormData({
+      //   name: res.data.firstName,
+      //   customerId: customerId,
+      //   date: currentDate,
+      //   address: "",
+      //   ifsc: "",
+      //   branch: "",
+      //   type: "",
+      //   credit: false,
+      //   debit: false,
+      //   netBanking: false,
+      // });
     })
     .catch((err) => console.log(err));
 }
 
-export async function getAccounts(custId,setAccounts) {
+export async function getAccounts(custId, setAccounts) {
   const path = `customer/accounts/${custId}`;
-  const res = await instance.get(path,{
-    headers: { "Content-Type": "application/json" }
-  })
-  .then((res)=>{
-    var accNumbers = [];
-    var accounts = [];
-    for(var i=0;i<res.data.length;i++){
-      if(!accNumbers.includes(res.data[i].accNumber)){
-        accNumbers.push(res.data[i].accNumber);
-        accounts.push(res.data[i]);
+  const res = await instance
+    .get(path, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((res) => {
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (!accNumbers.includes(res.data[i].accNumber)) {
+          accNumbers.push(res.data[i].accNumber);
+          accounts.push(res.data[i]);
+        }
       }
-    }
-    setAccounts(accounts);
-  })
+      setAccounts(accounts);
+    });
 }
 
-export async function getTransactions(accId,setTransactions) {
+export async function getTransactions(accId, setTransactions) {
   const path = `account/transactions/${accId}`;
-  const res = await instance.get(path,{
-    headers: { "Content-Type": "application/json" }
-  })
-  .then((res)=>{
-    setTransactions(res.data);
-    console.log(res);
-  })
+  const res = await instance
+    .get(path, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((res) => {
+      setTransactions(res.data);
+      console.log(res);
+    });
 }
-
-
 
 export async function getIFSC(address, setFormData) {
   const path = `account/${address}`;
   const res = await instance
     .get(path, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     })
     .then((res) => {
       setFormData((prev) => ({
@@ -155,7 +158,7 @@ export async function createAccount(formData) {
   const path = `account/create/1`;
   console.log(path);
   const accountDetails = {
-    accNumber: "",
+    accNumber: '',
     accType: formData.type,
     balance: 0,
     ifscCode: formData.ifsc,
@@ -168,8 +171,59 @@ export async function createAccount(formData) {
   console.log(accountDetails);
   const res = await instance
     .post(path, accountDetails, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 }
+
+export const withdraw = async (withdraw, changeView) => {
+  console.log(withdraw);
+  const res = await axios({
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    url: 'http://localhost:8080/account/withdraw',
+    data: withdraw,
+  })
+    .then((res) => {
+      console.log(res);
+      changeView('accountDetails');
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deposit = async (deposit, changeView) => {
+  console.log(deposit);
+  const res = await axios({
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    url: 'http://localhost:8080/account/deposit',
+    data: deposit,
+  })
+    .then((res) => {
+      console.log(res);
+      changeView('accountDetails');
+    })
+    .catch((err) => console.log(err));
+};
+
+export const transfer = async (fundTransfer, changeView) => {
+  console.log(deposit);
+  const res = await axios({
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    url: 'http://localhost:8080/account/fundTransfer',
+    data: fundTransfer,
+  })
+    .then((res) => {
+      console.log(res);
+      changeView('accountDetails');
+    })
+    .catch((err) => console.log(err));
+};
