@@ -11,6 +11,7 @@ import RegisterPage from './components/RegisterPage';
 
 // import AccountPage from './pages/AccountPage';
 import AccountStatement from './pages/AccountStatement';
+import Withdraw from './pages/Withdraw';
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/createaccount" element={<CreateAccount />} />
             <Route path="/accountstatement" element={<AccountStatement />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/withdraw" element={<Withdraw />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </BrowserRouter>
