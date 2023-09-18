@@ -110,8 +110,15 @@ export async function getAccounts(custId,setAccounts) {
     headers: { "Content-Type": "application/json" }
   })
   .then((res)=>{
-    setAccounts(res.data);
-    console.log(res);
+    var accNumbers = [];
+    var accounts = [];
+    for(var i=0;i<res.data.length;i++){
+      if(!accNumbers.includes(res.data[i].accNumber)){
+        accNumbers.push(res.data[i].accNumber);
+        accounts.push(res.data[i]);
+      }
+    }
+    setAccounts(accounts);
   })
 }
 
