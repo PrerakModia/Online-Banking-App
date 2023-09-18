@@ -41,6 +41,7 @@ public class AccountController {
 	
 	@GetMapping("/transactions/{accId}")
 	public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("accId") Long accId){
+		System.out.println("INSIDE TRANSACTION CONTROLLER");
 		return accountService.getTransactions(accId);
 	}
 	
