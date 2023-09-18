@@ -39,11 +39,6 @@ public class AccountService {
 			account.setAccNumber(id);
 			Customer c = customerRepository.findById(customerId).get();
 			account.setCustomer(c);
-//			System.out.println(account);
-//			List<Account> accounts = c.getAccounts();
-//			accounts.add(account);
-//			c.setAccounts(accounts);
-//			customerRepository.save(c);
 			Account response = accountRepository.save(account);
 			if(response != null) {
 				return "Account was successfully created!";
