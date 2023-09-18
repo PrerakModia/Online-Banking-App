@@ -37,6 +37,7 @@
 	/* padding-top: 3vw;
 	padding-bottom: 3vw; */
 	justify-content: center;
+	margin-top: 5%;
 }
 
 *,
@@ -222,7 +223,7 @@ a {
 		align-items: center;
 		text-decoration: none;
 		transition: 0.25s ease;
-
+        /* margin-top: 10% !important; */
 		* {
 			transition: 0.25s ease;
 		}
@@ -243,6 +244,10 @@ a {
 			color: var(--c-text-primary);
 		}
 	}
+}
+
+.navigation a{
+    margin-top: 10%;
 }
 
 .tabs {
