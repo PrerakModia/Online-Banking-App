@@ -62,7 +62,7 @@ public class Customer {
 	@Column(nullable=false)
 	private String occupation;
 	@Column(nullable=false)
-	private boolean isDisabled;
+	private Boolean isDisabled;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)

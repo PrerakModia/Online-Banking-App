@@ -1,7 +1,10 @@
 package com.banking.server.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.banking.server.entity.Account;
+import com.banking.server.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,9 @@ public class AdminService {
 	
 	@Autowired 
 	AdminRepository adminRepository;
+
+	@Autowired
+	AccountRepository accountRepository;
 	
 	public Admin createAdmin(Admin admin) {
 		return adminRepository.save(admin);
@@ -39,6 +45,17 @@ public class AdminService {
 			}
 		}
 		return response;
+	}
+
+	public List<Account> getDisabledAccounts(){
+		return adminRepository.getDisabledAccounts();
+	}
+
+	public boolean toggleAccount(long accNumber){
+		Account account = accountRepository.findByAccNumber(accNumber);
+		int count = adminRepository.updateIsDisabled(accNumber, !account.getIsDisabled());
+		return count == 1 ? true : false;
+
 	}
 
 }

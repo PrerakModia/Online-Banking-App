@@ -27,6 +27,7 @@ public class CustomerController {
 	@PostMapping
 	public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer){
 		try {
+			System.out.println(customer.toString());
 			Customer _customer = customerService.createCustomer(customer);
 			return new ResponseEntity<>(_customer,HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -45,9 +46,9 @@ public class CustomerController {
 	
 	@GetMapping("/accounts/{id}")
 	public ResponseEntity<List<Account>> getAccounts(@PathVariable("id") long id){
-		List<Account> accs = customerService.getAccounts(id);
-		if(accs==null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<List<Account>>(accs,HttpStatus.OK);
+		List<Account> acts = customerService.getAccounts(id);
+		if(acts==null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<List<Account>>(acts,HttpStatus.OK);
 	}
 	
 	@PostMapping("/login")

@@ -16,6 +16,7 @@ const RegisterPage = () => {
     state: '',
     salary: '',
     occupation: '',
+    isDisabled: false,
   });
 
   const changeHandler = (e, name) => {
@@ -35,6 +36,7 @@ const RegisterPage = () => {
       formData.city,
       formData.state,
       formData.salary,
+      formData.isDisabled,
       formData.occupation
     );
   };

@@ -1,4 +1,3 @@
-import { async } from 'q';
 import instance from './configuration';
 import axios from 'axios';
 
@@ -13,6 +12,7 @@ export async function signUpCustomer(
   city,
   state,
   salary,
+  isDisabled,
   occupation
 ) {
   const path = '/customer';
@@ -28,17 +28,20 @@ export async function signUpCustomer(
     state,
     salary,
     occupation,
+    isDisabled,
     accounts: [],
   };
+  console.log(customerDets);
   //const jsonCustomerDets = JSON.stringify(customerDets);
-  const res = await instance
-    .post(path, customerDets, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+  const res = await axios({
+    url: 'http://localhost:8080/customer',
+    method: 'post',
+    data: customerDets,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
     .then((resp) => {
-      console.log(resp);
       window.sessionStorage.setItem('customerId', resp.data.customerId);
       window.location.assign('/dashboard');
     })
@@ -79,30 +82,13 @@ export async function logInCustomer(customerId, password) {
 
 export async function getCustomer(customerId, setFormData) {
   const path = `customer/${customerId}`;
-  console.log(path);
+  // console.log(path);
   const res = await instance
     .get(path, {
       headers: { 'Content-Type': 'application/json' },
     })
     .then((res) => {
       setFormData(res.data);
-      // const date = new Date();
-      // let day = date.getDate();
-      // let month = date.getMonth() + 1;
-      // let year = date.getFullYear();
-      // let currentDate = `${day}-${month}-${year}`;
-      // setFormData({
-      //   name: res.data.firstName,
-      //   customerId: customerId,
-      //   date: currentDate,
-      //   address: "",
-      //   ifsc: "",
-      //   branch: "",
-      //   type: "",
-      //   credit: false,
-      //   debit: false,
-      //   netBanking: false,
-      // });
     })
     .catch((err) => console.log(err));
 }
@@ -167,6 +153,7 @@ export async function createAccount(formData) {
     isCreditCard: formData.credit,
     isDebitCard: formData.debit,
     isNetBanking: formData.netBanking,
+    isDisabled: true,
   };
   console.log(accountDetails);
   const res = await instance
