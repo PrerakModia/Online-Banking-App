@@ -1,14 +1,14 @@
-import { useState } from "react";
-import bgImage from "../assets/5.jpg";
-import { logInCustomer } from "../utils/auth";
+import { useState } from 'react';
+import bgImage from '../assets/5.jpg';
+import { logInCustomer } from '../utils/auth';
 
 const LoginPage = () => {
   const [logInDetails, setLogInDetails] = useState({
-    customerid: "",
-    password: "",
+    customerid: '',
+    password: '',
   });
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const changeHandler = (e, name) => {
     setLogInDetails((prev) => ({ ...prev, [name]: e.target.value }));
@@ -35,7 +35,7 @@ const LoginPage = () => {
                 name="customerId"
                 placeholder="Customer ID"
                 value={logInDetails.customerid}
-                onChange={(e) => changeHandler(e, "customerid")}
+                onChange={(e) => changeHandler(e, 'customerid')}
               />
               <div className="relative">
                 <input
@@ -44,7 +44,7 @@ const LoginPage = () => {
                   name="password"
                   placeholder="Password"
                   value={logInDetails.password}
-                  onChange={(e) => changeHandler(e, "password")}
+                  onChange={(e) => changeHandler(e, 'password')}
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,15 @@ const LoginPage = () => {
             </button>
 
             <div className="mt-10 text-xs border-b py-4">
-              <a>Forgot your Password?</a>
+              <a
+                href="#"
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                onClick={() => {
+                  window.location.assign('/forgotpassword');
+                }}
+              >
+                Forgot your Password?
+              </a>
             </div>
 
             <div className="text-sm flex justify-between items-center mt-3">
@@ -111,7 +119,7 @@ const LoginPage = () => {
               <button
                 className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
                 onClick={() => {
-                  window.location.assign("/register");
+                  window.location.assign('/register');
                 }}
               >
                 Register

@@ -13,6 +13,7 @@ import RegisterPage from './components/RegisterPage';
 
 import AccountStatement from './pages/AccountStatement';
 import Withdraw from './pages/Withdraw';
+import ForgotPassword from './components/ForgotPassword';
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -33,6 +34,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction" element={<Transactions />} />
             <Route path="/createaccount" element={<CreateAccount />} />

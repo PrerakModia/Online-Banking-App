@@ -227,3 +227,22 @@ export const transfer = async (fundTransfer, changeView) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const resetPassword = async (otp, customerId, password) => {
+  const res = await axios({
+    method: 'put',
+    url: `http://localhost:8080/customer/resetPassword/${otp}`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      customerId,
+      password,
+    },
+  })
+    .then((res) => {
+      console.log(res);
+      window.location.assign('/');
+    })
+    .catch((err) => console.log(err));
+};
