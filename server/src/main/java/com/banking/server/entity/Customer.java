@@ -61,6 +61,8 @@ public class Customer {
 	private Double salary;
 	@Column(nullable=false)
 	private String occupation;
+	@Column(nullable=false)
+	private boolean isDisabled;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
