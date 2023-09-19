@@ -42,6 +42,8 @@ public class Account {
 	private boolean isDebitCard;
 	
 	private boolean isNetBanking;
+	@NonNull
+	private boolean isDisabled;
 	
 	
 	@JsonManagedReference
