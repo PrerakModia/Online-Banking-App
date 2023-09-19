@@ -1,10 +1,9 @@
 package com.banking.server.service;
 
+import com.banking.server.entity.Transaction;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.banking.server.repository.CustomerRepository;
@@ -74,5 +73,23 @@ public class CustomerService {
 			}
 		}
 		return response;
+	}
+
+	public List<Transaction> fetchAllUserTransactions (long id){
+		Customer obj = customerRepository.findById(id).orElse(null);
+		if(obj == null){
+			return null;
+		}
+
+		List<Account> accountList = obj.getAccounts();
+		List<Transaction> transactionList = new ArrayList<>();
+		for(Account acc : accountList){
+			transactionList.addAll(acc.getTransactions());
+		}
+		Set<Transaction> set = new LinkedHashSet<>(transactionList);
+		transactionList.clear();
+		transactionList.addAll(set);
+
+		return transactionList;
 	}
 }

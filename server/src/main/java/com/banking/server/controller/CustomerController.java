@@ -1,5 +1,6 @@
 package com.banking.server.controller;
 
+import com.banking.server.entity.Transaction;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,5 +61,11 @@ public class CustomerController {
 	@PutMapping("/resetPassword/{OTP}")
 	public String changePassword(@RequestBody LoginModel loginModel, @PathVariable("OTP") String otp){
 		return customerService.resetPassword(loginModel, otp);
+	}
+	
+	@GetMapping("/allTransactions/{id}")
+	public List<Transaction> getAllTransactions(@PathVariable("id") long id){
+		System.out.println(id);
+		return customerService.fetchAllUserTransactions(id);
 	}
 }

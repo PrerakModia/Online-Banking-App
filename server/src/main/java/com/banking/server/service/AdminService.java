@@ -55,7 +55,15 @@ public class AdminService {
 		Account account = accountRepository.findByAccNumber(accNumber);
 		int count = adminRepository.updateIsDisabled(accNumber, !account.getIsDisabled());
 		return count == 1 ? true : false;
+	}
 
+	public Admin getAdmin(long id) {
+		Optional<Admin> obj = adminRepository.findById(id);
+		if(obj.isPresent()) {
+			return obj.get();
+		} else {
+			return null;
+		}
 	}
 
 }

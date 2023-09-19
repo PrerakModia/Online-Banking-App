@@ -2,16 +2,14 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import Dashboard from "./pages/Dashboard";
-import Transactions from "./pages/Transactions";
-import LoginPage from "./components/LoginPage";
-import Error from "./pages/ErrorPage";
-import CreateAccount from "./pages/CreateAccount";
-import RegisterPage from "./components/RegisterPage";
+import Dashboard from './pages/Dashboard';
+import Transactions from './pages/Transactions';
+import LoginPage from './components/LoginPage';
+import Error from './pages/ErrorPage';
+import CreateAccount from './pages/CreateAccount';
+import RegisterPage from './components/RegisterPage';
 import AddUser from './components/AddUser';
 import DeleteUser from './components/DeleteAccount';
-import HomePage from './pages/HomePage';
-// import AccountPage from './pages/AccountPage';
 
 import AccountStatement from './pages/AccountStatement';
 import Withdraw from './pages/Withdraw';
@@ -19,6 +17,7 @@ import ForgotPassword from './components/ForgotPassword';
 import AdminTransactions from './components/AdminTransactions';
 import DisableAccount from './components/DisableAccount';
 import Admin from './pages/AdminPortal';
+import AdminLogin from './components/AdminLogin';
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -39,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/adminlogin" element={<AdminLogin />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction" element={<Transactions />} />

@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
-import { logInCustomer } from '../utils/auth';
+import { logInAdmin } from '../utils/auth';
 
-const LoginPage = () => {
+const AdminLogin = () => {
   const [logInDetails, setLogInDetails] = useState({
-    customerid: '',
+    adminId: '',
     password: '',
   });
-
-  const [message, setMessage] = useState('');
 
   const changeHandler = (e, name) => {
     setLogInDetails((prev) => ({ ...prev, [name]: e.target.value }));
@@ -16,7 +14,7 @@ const LoginPage = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    logInCustomer(logInDetails.customerid, logInDetails.password, setMessage);
+    logInAdmin(logInDetails.adminId, logInDetails.password);
   };
 
   return (
@@ -26,16 +24,16 @@ const LoginPage = () => {
           <div className="md:w-1/2 px-8">
             <h2 className="font-bold text-2xl text-[#6E6D64]">LogIn</h2>
             <p className="text-sm mt-4 text-[#6E6D64]">
-              If you are already a customer, easily Log In
+              If you are already a admin, easily Log In
             </p>
             <form onSubmit={submitHandler} className="flex flex-col gap-4">
               <input
                 className="p-2 mt-8 rounded-xl borders"
                 type="text"
-                name="customerId"
-                placeholder="Customer ID"
-                value={logInDetails.customerid}
-                onChange={(e) => changeHandler(e, 'customerid')}
+                name="adminId"
+                placeholder="Admin ID"
+                value={logInDetails.adminId}
+                onChange={(e) => changeHandler(e, 'adminId')}
               />
               <div className="relative">
                 <input
@@ -65,7 +63,7 @@ const LoginPage = () => {
                 Log In
               </button>
             </form>
-            <p className="text-sm mt-4 text-[#6E6D64]">{message}</p>
+            {/* <p className="text-sm mt-4 text-[#6E6D64]">{message}</p> */}
             <div className="mt-10 grid grid-cols-3 items-center text-gray-500">
               <hr className="border-gray-500" />
               <p className="text-center text-sm">OR</p>
@@ -119,10 +117,10 @@ const LoginPage = () => {
                   href="#"
                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   onClick={() => {
-                    window.location.assign('/adminlogin');
+                    window.location.assign('/');
                   }}
                 >
-                  Admin? Login Here
+                  Customer? Login Here
                 </a>
               </div>
             </div>
@@ -148,4 +146,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AdminLogin;

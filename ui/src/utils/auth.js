@@ -57,7 +57,6 @@ export async function logInCustomer(customerId, password) {
     customerId,
     password,
   };
-  //const jsonLoginDets = JSON.stringify(loginDets);
   const res = await instance
     .post(path, loginDets, {
       headers: {
@@ -66,23 +65,51 @@ export async function logInCustomer(customerId, password) {
     })
     .then((resp) => {
       console.log(resp);
-      // setMessage(resp.data);
       window.sessionStorage.setItem('customerId', customerId);
       window.location.assign('/dashboard');
     })
     .catch((err) => {
       console.log(err);
-      // setMessage("error===" + err);
     });
-  // setTimeout(() => {
-  //   setMessage("");
-  // }, 5000);
-  return;
+}
+
+export async function logInAdmin(adminId, password) {
+  const path = '/admin/login';
+  const loginDets = {
+    adminId,
+    password,
+  };
+  const res = await instance
+    .post(path, loginDets, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((resp) => {
+      console.log(resp);
+      window.sessionStorage.setItem('adminId', adminId);
+      window.location.assign('/dashboard');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export async function getCustomer(customerId, setFormData) {
   const path = `customer/${customerId}`;
   // console.log(path);
+  const res = await instance
+    .get(path, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((res) => {
+      setFormData(res.data);
+    })
+    .catch((err) => console.log(err));
+}
+
+export async function getAdmin(adminId, setFormData) {
+  const path = `admin/${adminId}`;
   const res = await instance
     .get(path, {
       headers: { 'Content-Type': 'application/json' },
@@ -110,6 +137,39 @@ export async function getAccounts(custId, setAccounts) {
       }
       setAccounts(accounts);
     });
+}
+
+export async function getPendingAccounts(setAccounts) {
+  const path = `admin/pendingAccounts`;
+  const res = await instance
+    .get(path, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((res) => {
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (!accNumbers.includes(res.data[i].accNumber)) {
+          accNumbers.push(res.data[i].accNumber);
+          accounts.push(res.data[i]);
+        }
+      }
+      console.log(accounts);
+      setAccounts(accounts);
+    });
+}
+
+export async function getCustomerTransactions(customerId, setForm) {
+  const path = `customer/allTransactions/${customerId}`;
+  const res = await instance
+    .get(path, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((res) => {
+      console.log(res);
+      setForm(res.data);
+    })
+    .catch((err) => console.log(err));
 }
 
 export async function getTransactions(accId, setTransactions) {
@@ -163,6 +223,21 @@ export async function createAccount(formData) {
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 }
+
+export const approveAccount = async (accNo, refresh) => {
+  const res = await axios({
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    url: `http://localhost:8080/admin/toggleAccount/${accNo}`,
+  })
+    .then((res) => {
+      console.log(res);
+      refresh(Math.random());
+    })
+    .catch((err) => console.log(err));
+};
 
 export const withdraw = async (withdraw, changeView) => {
   console.log(withdraw);

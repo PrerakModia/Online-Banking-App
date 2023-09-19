@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { getCustomer, getIFSC, createAccount } from "../utils/auth";
+import React, { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { getCustomer, getIFSC, createAccount } from '../utils/auth';
 
 export default function CreateAccount() {
   const [formData, setFormData] = useState({
-    name: "",
-    customerId: "",
-    date: "",
-    address: "",
-    ifsc: "",
-    branch: "",
-    type: "",
+    name: '',
+    customerId: '',
+    date: '',
+    address: '',
+    ifsc: '',
+    branch: '',
+    type: '',
     credit: false,
     debit: false,
     netBanking: false,
   });
 
   useEffect(() => {
-    const data = window.sessionStorage.getItem("customerId");
+    const data = window.sessionStorage.getItem('customerId');
     getCustomer(data, setFormData);
   }, []);
 
@@ -28,7 +28,7 @@ export default function CreateAccount() {
     console.log(e.target.checked);
     console.log(name);
     if (e.target.checked) setFormData((prev) => ({ ...prev, type: name }));
-    else setFormData((prev) => ({ ...prev, type: "" }));
+    else setFormData((prev) => ({ ...prev, type: '' }));
   };
 
   const handleCardOptions = (e, option) => {
@@ -44,7 +44,10 @@ export default function CreateAccount() {
   };
 
   return (
-    <div className="main_container">
+    <div
+      className="h-screen w-screen flex flex-row"
+      style={{ borderLeft: '1.5px solid black' }}
+    >
       <h1>Please Fill the Below Fields to Create Account</h1>
       <form>
         <TextField
@@ -115,21 +118,21 @@ export default function CreateAccount() {
           control={<Checkbox />}
           label="Salary Account"
           onChange={(e) => {
-            changeAccountType(e, "salary");
+            changeAccountType(e, 'salary');
           }}
         />
         <FormControlLabel
           control={<Checkbox />}
           label="Current Account"
           onChange={(e) => {
-            changeAccountType(e, "current");
+            changeAccountType(e, 'current');
           }}
         />
         <FormControlLabel
           control={<Checkbox />}
           label="Savings Account"
           onChange={(e) => {
-            changeAccountType(e, "savings");
+            changeAccountType(e, 'savings');
           }}
         />
         <br />
@@ -137,29 +140,24 @@ export default function CreateAccount() {
           control={<Checkbox />}
           label="Credit Card"
           onChange={(e) => {
-            handleCardOptions(e, "credit");
+            handleCardOptions(e, 'credit');
           }}
         />
         <FormControlLabel
           control={<Checkbox />}
           label="Debit Card"
           onChange={(e) => {
-            handleCardOptions(e, "debit");
+            handleCardOptions(e, 'debit');
           }}
         />
         <FormControlLabel
           control={<Checkbox />}
           label="NetBanking"
           onChange={(e) => {
-            handleCardOptions(e, "netBanking");
+            handleCardOptions(e, 'netBanking');
           }}
         />
-        <br />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="I have read the terms and conditions"
-        />
-        <br />
+
         <Button
           variant="contained"
           onClick={() => {

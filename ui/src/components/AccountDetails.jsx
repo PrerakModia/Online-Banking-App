@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import { getAccounts } from '../utils/auth';
+import { getAccounts, getCustomerTransactions } from '../utils/auth';
 
 const AccountDetails = (props) => {
   const [accounts, setAccounts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   useEffect(() => {
     getAccounts(window.sessionStorage.getItem('customerId'), setAccounts);
+    getCustomerTransactions(
+      window.sessionStorage.getItem('customerId'),
+      setTransactions
+    );
   }, []);
 
   return (

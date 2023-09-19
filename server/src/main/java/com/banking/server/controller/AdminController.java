@@ -3,6 +3,7 @@ package com.banking.server.controller;
 import javax.validation.Valid;
 
 import com.banking.server.entity.Account;
+import com.banking.server.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,13 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Account Status was not changed!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body("Account Status successfully changed!");
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Admin> getAdmin(@PathVariable("id") long id){
+		Admin _admin = adminService.getAdmin(id);
+		if(_admin == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(_admin, HttpStatus.ACCEPTED);
 	}
 
 }
