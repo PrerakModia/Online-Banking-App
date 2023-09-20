@@ -16,8 +16,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.MediaType;
 
+import com.banking.server.entity.Account;
 import com.banking.server.entity.Customer;
 import com.banking.server.entity.LoginModel;
 import com.banking.server.service.CustomerService;
@@ -102,6 +106,28 @@ public class CustomerControllerTest {
 		mvc.perform(get("/customer/{id}",1)
 			      .contentType(MediaType.APPLICATION_JSON))
 			      .andExpect(status().isBadRequest());
+		
+	}
+	
+	@Test
+	public void getAccountsTest() throws Exception{
+		Account a = new Account();
+		a.setAccNumber(1234);
+		a.setAccType("savings");
+		a.setBalance(200.00);
+		a.setBranch("Banglore");
+		a.setDisabled(false);
+		a.setIfscCode("5675");
+		a.setOpeningDate("23-06-2023");
+		List l = new ArrayList();
+		l.add(a);
+		String json = mapper.writeValueAsString(l);
+		Mockito.when(customerService.getAccounts(1)).thenReturn(l);
+		MvcResult result = mvc.perform(get("/customer/accounts/1"))
+			      .andExpect(status().isOk()).andReturn();
+		Assertions.assertEquals(json,result.getResponse().getContentAsString());
+		
+		
 		
 	}
 
