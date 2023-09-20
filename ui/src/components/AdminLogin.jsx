@@ -130,10 +130,10 @@ const AdminLogin = () => {
               <button
                 className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
                 onClick={() => {
-                  window.location.assign('/register');
+                  window.location.assign('/registeradmin');
                 }}
               >
-                Register
+                Register Admin
               </button>
             </div>
           </div>

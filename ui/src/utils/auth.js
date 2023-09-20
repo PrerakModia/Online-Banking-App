@@ -32,7 +32,6 @@ export async function signUpCustomer(
     accounts: [],
   };
   console.log(customerDets);
-  //const jsonCustomerDets = JSON.stringify(customerDets);
   const res = await axios({
     url: 'http://localhost:8080/customer',
     method: 'post',
@@ -49,6 +48,21 @@ export async function signUpCustomer(
       console.log(err);
     });
   return;
+}
+
+export async function registerAdmin(adminDetails) {
+  const path = '/admin';
+  const res = await instance
+    .post(path, adminDetails, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => {
+      window.sessionStorage.setItem('adminId', res.data.adminId);
+      window.location.assign('/dashboard');
+    })
+    .catch((err) => console.log(err));
 }
 
 export async function logInCustomer(customerId, password) {

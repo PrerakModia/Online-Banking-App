@@ -18,6 +18,7 @@ import AdminTransactions from './components/AdminTransactions';
 import DisableAccount from './components/DisableAccount';
 import Admin from './pages/AdminPortal';
 import AdminLogin from './components/AdminLogin';
+import RegisterAdmin from './components/RegisterAdmin';
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/adminlogin" element={<AdminLogin />} />
+            <Route path="/registeradmin" element={<RegisterAdmin />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction" element={<Transactions />} />
