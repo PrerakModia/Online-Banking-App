@@ -1,5 +1,8 @@
 package com.banking.server.entity;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +30,7 @@ public class Transaction {
 	private long debitAccount;
 	private long creditAccount;
 	@NonNull
-	private String timeStamp;
+	private Date timeStamp;
 	@NonNull
 	private String status;
 	

@@ -1,6 +1,7 @@
 package com.banking.server.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.banking.server.entity.Account;
+import com.banking.server.entity.AccountStatementModel;
 import com.banking.server.entity.Customer;
 import com.banking.server.entity.FundTransferModel;
 import com.banking.server.entity.Transaction;
@@ -88,6 +90,7 @@ public class AccountService {
 		return new ResponseEntity<>(acc.getTransactions(),HttpStatus.OK);
 	}
 	
+	
 	@Transactional
 	public String withdraw(WithdrawModel model) {
 		String result = "";
@@ -101,15 +104,15 @@ public class AccountService {
 			else
 				result = "Transaction Failed";
 		}
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
 		Transaction transaction = new Transaction();
 		transaction.setAccount(account);
 		transaction.setAmount(model.getAmount());
 		transaction.setDebitAccount(model.getAccNumber());
 		transaction.setStatus(result);
 		transaction.setTxnType("Withdraw");
-		transaction.setTimeStamp(df.format(new Date()));
+		transaction.setTimeStamp(new Date());
 		transactionRepository.save(transaction);
+		System.out.println(transaction.getAccount().getAccNumber());
 		return result;
 	}
 	
@@ -122,14 +125,13 @@ public class AccountService {
 			result = "Transaction Success";
 		else 
 			result = "Transaction Failed";
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
 		Transaction transaction = new Transaction();
 		transaction.setAccount(account);
 		transaction.setAmount(model.getAmount());
 		transaction.setCreditAccount(model.getAccNumber());
 		transaction.setStatus(result);
 		transaction.setTxnType("Deposit");
-		transaction.setTimeStamp(df.format(new Date()));
+		transaction.setTimeStamp(new Date());
 		transactionRepository.save(transaction);
 		return result;
 		
@@ -155,7 +157,7 @@ public class AccountService {
 					result = "Transaction Failed";
 			}
 		}
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
+		//SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");
 		Transaction transaction = new Transaction();
 		transaction.setAccount(debitAccount);
 		transaction.setAmount(model.getAmount());
@@ -163,7 +165,7 @@ public class AccountService {
 		transaction.setDebitAccount(model.getFromAccountNo());
 		transaction.setStatus(result);
 		transaction.setTxnType("FundTransfer");
-		transaction.setTimeStamp(df.format(new Date()));
+		transaction.setTimeStamp(new Date());
 		transactionRepository.save(transaction);
 		return result;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.banking.server.entity.AccountStatementModel;
 import com.banking.server.entity.Transaction;
 import com.banking.server.repository.TransactionRepository;
 
@@ -24,6 +25,13 @@ public class TransactionService {
 		} catch (Exception E) {
 			return E.getMessage();
 		}
+	}
+	
+	public List<Transaction> getAccountstatement(AccountStatementModel model){
+		List<Transaction> t =transactionRepository.getTransactionBetween(model.getAccountNo(), model.getFromDate(), model.getToDate());
+		System.out.println(t);
+		System.out.println("Inside transaction service");
+		return t;
 	}
 	
 }
