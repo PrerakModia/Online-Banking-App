@@ -3,14 +3,11 @@ import React from 'react';
 import '../styles/withdraw.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Sidebar from './Sidebar';
 function Withdraw() {
   return (
     <div>
       |
       <div className="admin_container" style={{ display: 'flex' }}>
-        <Sidebar />
-
         <div className="withdraw_body" style={{ width: '100%' }}>
           <div className="form_container" align="center">
             <TextField

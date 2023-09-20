@@ -51,6 +51,8 @@ public class AdminService {
 		return adminRepository.getDisabledAccounts();
 	}
 
+	public List<Account> getApprovedAccounts(){return adminRepository.getApprovedAccounts();}
+
 	public boolean toggleAccount(long accNumber){
 		Account account = accountRepository.findByAccNumber(accNumber);
 		int count = adminRepository.updateIsDisabled(accNumber, !account.getIsDisabled());

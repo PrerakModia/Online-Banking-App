@@ -49,6 +49,13 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(pendingAccounts);
 	}
 
+	@GetMapping("/approvedAccounts")
+	public ResponseEntity<?> getApprovedAccounts(){
+		List<Account> approvedAccounts = adminService.getApprovedAccounts();
+		if(approvedAccounts == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Account[0]);
+		return ResponseEntity.status(HttpStatus.OK).body(approvedAccounts);
+	}
+
 	@PutMapping("/toggleAccount/{accNo}")
 	public ResponseEntity<?> toggleAccounts(@PathVariable("accNo") Long accNo){
 		boolean response = adminService.toggleAccount(accNo);

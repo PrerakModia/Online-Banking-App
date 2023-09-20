@@ -9,12 +9,10 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import Sidebar from './Sidebar';
 function Withdraw() {
   return (
     <div>
       <div className="admin_container" style={{ display: 'flex' }}>
-        <Sidebar />
         <List sx={{ width: '100%', maxWidth: '100%', bgcolor: '#1f1f1f' }}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>

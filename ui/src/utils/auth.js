@@ -173,6 +173,26 @@ export async function getPendingAccounts(setAccounts) {
     });
 }
 
+export async function getApprovedAccounts(setAccounts) {
+  const path = `admin/approvedAccounts`;
+  const res = await instance
+    .get(path, {
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then((res) => {
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (!accNumbers.includes(res.data[i].accNumber)) {
+          accNumbers.push(res.data[i].accNumber);
+          accounts.push(res.data[i]);
+        }
+      }
+      console.log(accounts);
+      setAccounts(accounts);
+    });
+}
+
 export async function getCustomerTransactions(customerId, setForm) {
   const path = `customer/allTransactions/${customerId}`;
   const res = await instance

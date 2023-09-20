@@ -17,6 +17,9 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     @Query("SELECT acc FROM Account acc where acc.isDisabled = true")
     public List<Account> getDisabledAccounts();
 
+    @Query("SELECT acc FROM Account acc where acc.isDisabled = false")
+    public List<Account> getApprovedAccounts();
+
     @Query("Update Account acc SET acc.isDisabled = ?2 WHERE acc.accNumber = ?1")
     @Transactional
     @Modifying
