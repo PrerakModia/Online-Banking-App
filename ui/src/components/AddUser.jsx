@@ -14,7 +14,7 @@ function Withdraw() {
       <div className="withdraw_body" style={{    width: '100%'
 }}>
         <Nav/>
-        <div className="form_container" align="center">
+        <div className="form_container" align="left">
         <TextField
           id="outlined-basic"
           sx={{ p: 2 }}

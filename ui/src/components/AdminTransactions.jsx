@@ -17,7 +17,7 @@ function Withdraw() {
         <Nav/>
         <div className='admin_container' style={{display:'flex'}}>
             <Sidebar/>
-            <List sx={{ width: '100%', maxWidth: '100%', bgcolor: '#1f1f1f' }}>
+            <List sx={{ width: '100%', maxWidth: '100%', bgcolor: '#fff' }}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Nav from '../components/NavBarComponent';
 import Sidebar from '../components/Sidebar';
-import AddUser from '../components/AddUser';
+import Typography from '@mui/material/Typography';
 
 export default function Admin(props) {
   return (
@@ -9,7 +9,9 @@ export default function Admin(props) {
         <Nav/>
         <div className='admin_container' style={{display:'flex'}}>
             <Sidebar/>
-            {/* <AddUser/> */}
+            <Typography variant="h3" gutterBottom>
+            Greetings of the day, Admin!
+      </Typography>
         </div>
     </div>
   )

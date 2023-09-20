@@ -14,7 +14,7 @@ import Block from '@mui/icons-material/Block';
 import {Link} from 'react-router-dom';
 export default function BasicList() {
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' , borderColor:'black', border:'0px 2px 0px 0px'}}>
+    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: '#fff0eb'}}>
       <nav aria-label="main mailbox folders">
         <List sx={{fontColor:'black'}}>
          <Link to="/adduser"> <ListItem disablePadding>
@@ -49,14 +49,14 @@ export default function BasicList() {
               <ListItemText primary="Disable Account" />
             </ListItemButton>
           </ListItem></Link>
-          <ListItem disablePadding>
+          <Link to="/editaccount">  <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <Edit />
               </ListItemIcon>
               <ListItemText primary="Edit Account" />
             </ListItemButton>
-          </ListItem>
+          </ListItem></Link>
         </List>
       </nav>
       </Box>

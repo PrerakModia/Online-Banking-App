@@ -23,7 +23,7 @@ function Withdraw() {
           required
         /><br/>
        <Button variant="contained" size="small" style={{alignSelf:"center"}}>
-          Add User
+          Disable Account
         </Button>
         </div>
       </div>
