@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAccounts, getTransactions } from '../utils/auth';
+import { getAccounts, getTransactions, getStatement } from '../utils/auth';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -30,7 +30,13 @@ const Transactions = () => {
 
   const handleChange = (event) => {
     setSelectedAccNo(event.target.value);
-    getTransactions(event.target.value, setTransactions);
+    // getTransactions(event.target.value, setTransactions);
+    getStatement(
+      event.target.value,
+      value.startDate,
+      value.endDate,
+      setTransactions
+    );
   };
 
   useEffect(() => {
@@ -71,6 +77,46 @@ const Transactions = () => {
               onChange={handleValueChange}
               showShortcuts
             />
+          </div>
+        </div>
+        <div className="mx-5 mt-5">
+          <div class="relative overflow-x-hidden">
+            <table class="text-sm text-left text-gray-500">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3">
+                    Credit Account
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Debit Account
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Amount
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Transaction Type
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((item) => {
+                  console.log(item);
+                  return (
+                    <tr class="bg-white border-b">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {item.creditAccount}
+                      </th>
+                      <td class="px-6 py-4">{item.debitAccount}</td>
+                      <td class="px-6 py-4">{item.amount}</td>
+                      <td class="px-6 py-4">{item.txnType}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

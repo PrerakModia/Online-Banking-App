@@ -342,3 +342,20 @@ export const resetPassword = async (otp, customerId, password) => {
     })
     .catch((err) => console.log(err));
 };
+
+export function getStatement(accountNo, fromDate, toDate, setData) {
+  const res = axios({
+    method: 'post',
+    url: 'http://localhost:8080/accountStatement',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      accountNo,
+      fromDate,
+      toDate,
+    },
+  })
+    .then((res) => setData(res.data))
+    .catch((err) => console.log(err));
+}
