@@ -13,7 +13,8 @@ import com.banking.server.entity.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 	
-	@Query("select t from Transaction t where t.account.accNumber=?1 and t.timeStamp between ?2 and ?3 ")
+	@Query("select t from Transaction t where t.account.accNumber=?1 and (t.timeStamp between ?2 and ?3) ")
+	//@Query("select t from Transaction t where t.account.accNumber=?1")
 	public List<Transaction> getTransactionBetween(long accountNo, Date fromDate, Date toDate);
 	
 }
