@@ -2,9 +2,11 @@ import { HiOutlineQuestionMarkCircle } from 'react-icons/hi2';
 import InboxIcon from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
 import Receipt from '@mui/icons-material/ReceiptLong';
-import Edit from '@mui/icons-material/Edit';
 import { BsToggleOn } from 'react-icons/bs';
-import { MdOutlineAccountBalanceWallet } from 'react-icons/md';
+import {
+  MdOutlineAccountBalanceWallet,
+  MdOutlineAccountBox,
+} from 'react-icons/md';
 
 export const navLinks = [
   {
@@ -66,7 +68,7 @@ export const adminLinks = [
   { name: 'Delete User', icon: <Delete /> },
   { name: 'View Transactions', icon: <Receipt /> },
   { name: 'Toggle Accounts', icon: <BsToggleOn /> },
-  { name: 'Edit Account', icon: <Edit /> },
+  { name: 'Customer Accounts', icon: <MdOutlineAccountBox /> },
 ];
 
 export const bottomLinks = [

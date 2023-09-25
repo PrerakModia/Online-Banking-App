@@ -45,6 +45,8 @@ const SideBarMain = (props) => {
                   onClick={(e) => {
                     if (e.target.text === 'Toggle Accounts')
                       props.changeView('toggleAccounts');
+                    if (e.target.text === 'Customer Accounts')
+                      props.changeView('customerAccounts');
                   }}
                 >
                   <span className="text-base">{item.icon}</span>

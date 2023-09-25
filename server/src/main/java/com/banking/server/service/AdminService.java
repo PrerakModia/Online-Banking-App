@@ -3,6 +3,7 @@ package com.banking.server.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.banking.server.Exceptions.AccountNotFound;
 import com.banking.server.entity.Account;
 import com.banking.server.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class AdminService {
 		return adminRepository.save(admin);
 	}
 	
-	public String validateAdmin(AdminLoginModel model) {
+	public String validateAdmin(AdminLoginModel model) throws AccountNotFound {
 		Admin a =null;
 		String response= "";
 		Optional<Admin> obj = adminRepository.findById(model.getAdminId());
@@ -34,14 +35,14 @@ public class AdminService {
 			a=obj.get();		
 		}
 		if(a==null) {
-			response = "Admin Id not found. Please Enter correct Admin Id.";
+			throw new AccountNotFound("Admin Id not found. Please Enter correct Admin Id.");
 		}
 		else {
 			if(model.getPassword().equals(a.getPassword())) {
 				response = "Login success";
 			}
 			else {
-				response = "Incorrect Password";
+				throw new AccountNotFound("Incorrect Password");
 			}
 		}
 		return response;

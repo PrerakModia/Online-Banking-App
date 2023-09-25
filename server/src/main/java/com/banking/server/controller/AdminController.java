@@ -2,6 +2,7 @@ package com.banking.server.controller;
 
 import javax.validation.Valid;
 
+import com.banking.server.Exceptions.AccountNotFound;
 import com.banking.server.entity.Account;
 import com.banking.server.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/login")
-	public String validateAdmin(@Valid @RequestBody AdminLoginModel admin) {
+	public String validateAdmin(@Valid @RequestBody AdminLoginModel admin) throws AccountNotFound {
 		System.out.println("Inside login");
 		return adminService.validateAdmin(admin);
 	}

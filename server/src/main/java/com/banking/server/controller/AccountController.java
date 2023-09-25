@@ -2,6 +2,9 @@ package com.banking.server.controller;
 
 import java.util.List;
 
+import com.banking.server.Exceptions.AccountNotFound;
+import com.banking.server.Exceptions.CustomerNotFound;
+import com.banking.server.Exceptions.TransactionDeclinedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,35 +33,35 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@PostMapping("/create/{cId}")
-	public String CreateAccount(@RequestBody Account account, @PathVariable("cId") Long customerId) {
+	public String CreateAccount(@RequestBody Account account, @PathVariable("cId") Long customerId) throws CustomerNotFound {
 		return accountService.addAccount(account, customerId);
 	}
 	
 	@GetMapping("/{address}")
-	public ResponseEntity<Object> getIFSC(@PathVariable("address") String address){
+	public ResponseEntity<Object> getIFSC(@PathVariable("address") String address) throws AccountNotFound {
 		return accountService.getIFSC();
 	}
 	
 	@GetMapping("/transactions/{accId}")
-	public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("accId") Long accId){
+	public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("accId") Long accId) throws AccountNotFound {
 		System.out.println("INSIDE TRANSACTION CONTROLLER");
 		return accountService.getTransactions(accId);
 	}
 	
 	@PutMapping("/withdraw")
-	public String withdrawAmount(@RequestBody WithdrawModel model) {
+	public String withdrawAmount(@RequestBody WithdrawModel model) throws TransactionDeclinedException {
 		System.out.println();
 		System.out.println("Inside withdraw controller");
 		return accountService.withdraw(model);
 	}
 	
 	@PutMapping("/deposit")
-	public String depositAmount(@RequestBody WithdrawModel model) {
+	public String depositAmount(@RequestBody WithdrawModel model) throws TransactionDeclinedException {
 		return accountService.deposit(model);
 	}
 	
 	@PutMapping("/fundTransfer")
-	public String fundTransfer(@RequestBody FundTransferModel model) {
+	public String fundTransfer(@RequestBody FundTransferModel model) throws TransactionDeclinedException {
 		return accountService.fundTransfer(model);
 	}
 

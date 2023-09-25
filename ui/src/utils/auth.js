@@ -117,6 +117,7 @@ export async function getCustomer(customerId, setFormData) {
       headers: { 'Content-Type': 'application/json' },
     })
     .then((res) => {
+      console.log(res.data);
       setFormData(res.data);
     })
     .catch((err) => console.log(err));
@@ -129,6 +130,7 @@ export async function getAdmin(adminId, setFormData) {
       headers: { 'Content-Type': 'application/json' },
     })
     .then((res) => {
+      console.log(res.data);
       setFormData(res.data);
     })
     .catch((err) => console.log(err));
@@ -234,8 +236,8 @@ export async function getIFSC(address, setFormData) {
     .catch((err) => console.log(err));
 }
 
-export async function createAccount(formData) {
-  const path = `account/create/1`;
+export async function createAccount(formData, changeView) {
+  const path = `account/create/${formData.customerId}`;
   console.log(path);
   const accountDetails = {
     accNumber: '',
@@ -244,9 +246,9 @@ export async function createAccount(formData) {
     ifscCode: formData.ifsc,
     branch: formData.branch,
     openingDate: formData.date,
-    isCreditCard: formData.credit,
-    isDebitCard: formData.debit,
-    isNetBanking: formData.netBanking,
+    isCreditCard: true,
+    isDebitCard: false,
+    isNetBanking: true,
     isDisabled: true,
   };
   console.log(accountDetails);
@@ -254,7 +256,7 @@ export async function createAccount(formData) {
     .post(path, accountDetails, {
       headers: { 'Content-Type': 'application/json' },
     })
-    .then((res) => console.log(res))
+    .then((res) => changeView('accountDetails'))
     .catch((err) => console.log(err));
 }
 

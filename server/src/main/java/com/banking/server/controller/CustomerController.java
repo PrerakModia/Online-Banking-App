@@ -1,5 +1,7 @@
 package com.banking.server.controller;
 
+import com.banking.server.Exceptions.AccountNotFound;
+import com.banking.server.Exceptions.CustomerNotFound;
 import com.banking.server.entity.Transaction;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +40,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id){
+	public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id) throws CustomerNotFound {
 		Customer _customer = customerService.getCustomer(id);
 		System.out.println(_customer);
 		if(_customer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -46,14 +48,14 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/accounts/{id}")
-	public ResponseEntity<List<Account>> getAccounts(@PathVariable("id") long id){
+	public ResponseEntity<List<Account>> getAccounts(@PathVariable("id") long id) throws AccountNotFound {
 		List<Account> acts = customerService.getAccounts(id);
 		if(acts==null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<List<Account>>(acts,HttpStatus.OK);
 	}
 	
 	@PostMapping("/login")
-	public String validateCustomer(@Valid @RequestBody LoginModel customer) {
+	public String validateCustomer(@Valid @RequestBody LoginModel customer) throws CustomerNotFound {
 		System.out.println("Inside login");
 		return customerService.validateCustomer(customer);
 	}
@@ -64,7 +66,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/allTransactions/{id}")
-	public List<Transaction> getAllTransactions(@PathVariable("id") long id){
+	public List<Transaction> getAllTransactions(@PathVariable("id") long id) {
 		System.out.println(id);
 		return customerService.fetchAllUserTransactions(id);
 	}

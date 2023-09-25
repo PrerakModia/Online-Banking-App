@@ -11,6 +11,8 @@ import AdminDetails from '../components/AdminDetails';
 import ToggleAccounts from '../components/ToggleAccounts';
 import CreateAccount from './CreateAccount';
 import AllTransactions from '../components/AllTransactions';
+import { render } from '@testing-library/react';
+import CustomerAccounts from '../components/CustomerAccounts';
 
 const Dashboard = () => {
   const [user, setUser] = useState('');
@@ -40,14 +42,21 @@ const Dashboard = () => {
           {renderView === 'allTransactions' && (
             <AllTransactions changeView={setRenderView} />
           )}
-          {renderView === 'createAccount' && <CreateAccount />}
-          {renderView === 'adminDetails' && <AdminDetails />}
+          {renderView === 'createAccount' && (
+            <CreateAccount changeView={setRenderView} />
+          )}
+          {renderView === 'adminDetails' && (
+            <AdminDetails changeView={setRenderView} />
+          )}
           {renderView === 'toggleAccounts' && <ToggleAccounts />}
           {renderView === 'accountDetails' && (
             <AccountDetails
               customer={customerDetails}
               changeView={setRenderView}
             />
+          )}
+          {renderView === 'customerAccounts' && (
+            <CustomerAccounts changeView={setRenderView} />
           )}
           {renderView === 'withdraw' && (
             <Withdraw customer={customerDetails} changeView={setRenderView} />

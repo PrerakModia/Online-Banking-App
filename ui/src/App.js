@@ -19,6 +19,7 @@ import DisableAccount from './components/DisableAccount';
 import Admin from './pages/AdminPortal';
 import AdminLogin from './components/AdminLogin';
 import RegisterAdmin from './components/RegisterAdmin';
+import CustomerAccounts from './components/CustomerAccounts';
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -46,6 +47,7 @@ function App() {
             <Route path="/transaction" element={<Transactions />} />
             <Route path="/createaccount" element={<CreateAccount />} />
             <Route path="/accountstatement" element={<AccountStatement />} />
+            <Route path="/customerAccounts" element={<CustomerAccounts />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/withdraw" element={<Withdraw />} />
             <Route path="/admin" element={<Admin />} />

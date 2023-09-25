@@ -86,7 +86,7 @@ const AccountDetails = (props) => {
                       <td class="px-6 py-4">
                         {item.accType !== '' ? item.accType : 'savings'}
                       </td>
-                      <td class="px-6 py-4">18-09-2023</td>
+                      <td class="px-6 py-4">{item.openingDate}</td>
                     </tr>
                   ) : null;
                 })}

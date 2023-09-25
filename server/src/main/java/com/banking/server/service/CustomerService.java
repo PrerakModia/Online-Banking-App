@@ -1,5 +1,7 @@
 package com.banking.server.service;
 
+import com.banking.server.Exceptions.AccountNotFound;
+import com.banking.server.Exceptions.CustomerNotFound;
 import com.banking.server.entity.Transaction;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +24,12 @@ public class CustomerService {
 		return customerRepository.save(customer);
 	}
 	
-	public Customer getCustomer(long id) {
+	public Customer getCustomer(long id) throws CustomerNotFound {
 		Optional<Customer> obj = customerRepository.findById(id);
 		if(obj.isPresent()) {
 			return obj.get();
 		} else {
-			return null;
+			throw new CustomerNotFound("Customer Not Found");
 		}
 	}
 
@@ -48,13 +50,13 @@ public class CustomerService {
 		}
 	}
 	
-	public List<Account> getAccounts(long id){
+	public List<Account> getAccounts(long id) throws AccountNotFound {
 		Customer c = getCustomer(id);
-		if(c==null) return null;
+		if(c==null) throw new AccountNotFound("Accounts not found for this customer");
 		return c.getAccounts();
 	}
 	
-	public String validateCustomer(LoginModel customer) {
+	public String validateCustomer(LoginModel customer) throws CustomerNotFound {
 		Customer c=null;
 		String response= "";
 		Optional<Customer> obj = customerRepository.findById(customer.getCustomerId());
@@ -62,14 +64,14 @@ public class CustomerService {
 			c=obj.get();		
 		}
 		if(c==null) {
-			response = "Customer Id not found. Please Register";
+			throw new CustomerNotFound("Customer Id not found. Please Register");
 		}
 		else {
 			if(customer.getPassword().equals(c.getPassword())) {
 				response = "Login success";
 			}
 			else {
-				response = "Incorrect Password";
+				throw new CustomerNotFound("Incorrect Password");
 			}
 		}
 		return response;
