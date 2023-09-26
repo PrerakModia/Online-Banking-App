@@ -11,7 +11,7 @@ export default function CreateAccount(props) {
     address: '',
     ifsc: '',
     branch: '',
-    type: '',
+    type: 'current',
     credit: false,
     debit: false,
     netBanking: false,
@@ -160,6 +160,7 @@ export default function CreateAccount(props) {
                   class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="grid-accType"
                   onChange={(e) => changeAccountType(e.target.value)}
+                  value={formData.type}
                 >
                   <option value="current">Current</option>
                   <option value="savings">Savings</option>

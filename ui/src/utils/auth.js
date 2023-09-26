@@ -118,6 +118,15 @@ export async function getCustomer(customerId, setFormData) {
     })
     .then((res) => {
       console.log(res.data);
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.accounts.length; i++) {
+        if (!accNumbers.includes(res.data.accounts[i].accNumber)) {
+          accNumbers.push(res.data.accounts[i].accNumber);
+          accounts.push(res.data.accounts[i]);
+        }
+      }
+      res.data.accounts=accounts;
       setFormData(res.data);
     })
     .catch((err) => console.log(err));
