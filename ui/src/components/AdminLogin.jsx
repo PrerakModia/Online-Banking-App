@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
 import { logInAdmin } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminLogin = () => {
   const [logInDetails, setLogInDetails] = useState({
@@ -14,7 +16,15 @@ const AdminLogin = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    logInAdmin(logInDetails.adminId, logInDetails.password);
+    if (logInDetails.adminId === '' && logInDetails.password === '') {
+      toast.info('Please Enter AdminID and Password');
+    } else if (logInDetails.adminId !== '' && logInDetails.password === '') {
+      toast.warn('Please Enter the Password');
+    } else if (logInDetails.adminId === '' && logInDetails.password !== '') {
+      toast.warn('Please Enter a AdminID');
+    } else {
+      logInAdmin(logInDetails.adminId, logInDetails.password);
+    }
   };
 
   return (

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getCustomer, getIFSC, createAccount } from '../utils/auth';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateAccount(props) {
   const [formData, setFormData] = useState({
@@ -200,8 +202,32 @@ export default function CreateAccount(props) {
         </form>
         <button
           class="bg-transparent hover:bg-black hover:text-white text-black font-semibold mt-4 py-2 px-4 border border-black hover:border-transparent rounded"
-          onClick={() => {
-            createAccount(formData, props.changeView);
+          onClick={(e) => {
+            e.preventDefault();
+            console.log(formData.address);
+            if (formData.firstName === '') {
+              toast.warn('Please enter your first name');
+            } else if (formData.lastName === '') {
+              toast.warn('Please enter your last name');
+            } else if (
+              formData.address === '' ||
+              formData.address === undefined
+            ) {
+              toast.warn('Please enter your address');
+            } else if (formData.customerId === '') {
+              toast.warn('Please enter your customer Id');
+            } else if (
+              formData.branch === '' ||
+              formData.branch === undefined
+            ) {
+              toast.warn('Please enter your nearest branch');
+            } else if (formData.ifsc === '' || formData.ifsc === undefined) {
+              toast.warn("Please enter your nearest branch's isfc code");
+            } else if (formData.date === '' || formData.date === undefined) {
+              toast.warn("Please enter today's date");
+            } else {
+              createAccount(formData, props.changeView);
+            }
           }}
         >
           Create Account

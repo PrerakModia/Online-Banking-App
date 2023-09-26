@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { deposit } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Deposit(props) {
   const [accounts, setAccounts] = useState([]);
@@ -79,8 +81,15 @@ function Deposit(props) {
       )}
       <button
         className="bg-[#6E6D64] text-white py-2 hover:scale-105 duration-300 mb-4 mx-5"
-        onClick={() => {
-          deposit(depositDetails, props.changeView);
+        onClick={(e) => {
+          e.preventDefault();
+          if (depositDetails.accNumber === '') {
+            toast.warn('Please select a account to deposit money into.');
+          } else if (depositDetails.amount === 0) {
+            toast.warn('Please enter an amount to deposit');
+          } else {
+            deposit(depositDetails, props.changeView);
+          }
         }}
       >
         Deposit

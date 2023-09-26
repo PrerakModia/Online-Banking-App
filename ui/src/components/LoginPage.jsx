@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
 import { logInCustomer } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
   const [logInDetails, setLogInDetails] = useState({
@@ -8,15 +10,21 @@ const LoginPage = () => {
     password: '',
   });
 
-  const [message, setMessage] = useState('');
-
   const changeHandler = (e, name) => {
     setLogInDetails((prev) => ({ ...prev, [name]: e.target.value }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    logInCustomer(logInDetails.customerid, logInDetails.password, setMessage);
+    if (logInDetails.customerid === '' && logInDetails.password === '') {
+      toast.info('Please Enter CustomerID and Password');
+    } else if (logInDetails.customerid !== '' && logInDetails.password === '') {
+      toast.warn('Please Enter the Password');
+    } else if (logInDetails.customerid === '' && logInDetails.password !== '') {
+      toast.warn('Please Enter a CustomerID');
+    } else {
+      logInCustomer(logInDetails.customerid, logInDetails.password);
+    }
   };
 
   return (
@@ -65,7 +73,6 @@ const LoginPage = () => {
                 Log In
               </button>
             </form>
-            <p className="text-sm mt-4 text-[#6E6D64]">{message}</p>
             <div className="mt-10 grid grid-cols-3 items-center text-gray-500">
               <hr className="border-gray-500" />
               <p className="text-center text-sm">OR</p>
