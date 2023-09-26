@@ -52,9 +52,9 @@ public class AccountControllerTest {
 		acc.setIfscCode("12345678901");
 		acc.setBranch("ETV Bangalore");
 		acc.setOpeningDate("13-09-2023");
-		acc.setCreditCard(false);
-		acc.setDebitCard(false);
-		acc.setNetBanking(true);
+//		acc.setCreditCard(false);
+//		acc.setDebitCard(false);
+//		acc.setNetBanking(true);
 		Mockito.when(accountService.addAccount(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn("Account was successfully created!");
 		String json = mapper.writeValueAsString(acc);
 		MvcResult result = mvc.perform(post("/account/create/1").

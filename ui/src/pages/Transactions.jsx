@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getAccounts, getTransactions, getStatement } from '../utils/auth';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Datepicker from 'react-tailwindcss-datepicker';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getAccounts, getTransactions, getStatement } from "../utils/auth";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Datepicker from "react-tailwindcss-datepicker";
 
 const Transactions = () => {
   const [value, setValue] = useState({
@@ -21,7 +21,7 @@ const Transactions = () => {
   });
 
   const handleValueChange = (newValue) => {
-    console.log('newValue:', newValue);
+    console.log("newValue:", newValue);
     setValue(newValue);
   };
   const [accounts, setAccounts] = useState([]);
@@ -40,14 +40,14 @@ const Transactions = () => {
   };
 
   useEffect(() => {
-    getAccounts(window.sessionStorage.getItem('customerId'), setAccounts);
+    getAccounts(window.sessionStorage.getItem("customerId"), setAccounts);
   }, []);
 
   return (
     <>
       <div
         className="flex flex-col h-screen"
-        style={{ borderLeft: '1.5px solid black' }}
+        style={{ borderLeft: "1.5px solid black" }}
       >
         <div className="mx-5 my-7">
           <label
