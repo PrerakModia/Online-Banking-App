@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { withdraw } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Withdraw(props) {
   const [accounts, setAccounts] = useState([]);
@@ -84,8 +86,17 @@ function Withdraw(props) {
       )}
       <button
         className="bg-[#6E6D64] text-white py-2 hover:scale-105 duration-300 mb-4 mx-5"
-        onClick={() => {
-          withdraw(withdrawDetails, props.changeView);
+        onClick={(e) => {
+          e.preventDefault();
+          if (withdrawDetails.accNumber === '') {
+            toast.warn('Please select a account to withdraw money from.');
+          } else if (withdrawDetails.amount === 0) {
+            toast.warn('Please enter an amount to withdraw');
+          } else if (withdrawDetails.amount > balance) {
+            toast.warn('Please enter an amount less than balance available');
+          } else {
+            withdraw(withdrawDetails, props.changeView);
+          }
         }}
       >
         Withdraw

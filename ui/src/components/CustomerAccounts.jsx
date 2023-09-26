@@ -12,7 +12,12 @@ const CustomerAccounts = (props) => {
       getAccounts(customerId, setAccountDetails);
       setSearchCustomer(customerId);
     }
-  });
+  },[]);
+
+  useEffect(()=>{
+    if(searchCustomer!='')
+    getAccounts(searchCustomer, setAccountDetails);
+  },[number]);
 
   return (
     <div

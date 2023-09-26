@@ -1,5 +1,7 @@
 import instance from './configuration';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export async function signUpCustomer(
   firstName,
@@ -83,6 +85,7 @@ export async function logInCustomer(customerId, password) {
       window.location.assign('/dashboard');
     })
     .catch((err) => {
+      toast.error(err.response.data.message);
       console.log(err);
     });
 }
@@ -105,6 +108,7 @@ export async function logInAdmin(adminId, password) {
       window.location.assign('/dashboard');
     })
     .catch((err) => {
+      toast.error(err.response.data.message);
       console.log(err);
     });
 }
@@ -118,6 +122,15 @@ export async function getCustomer(customerId, setFormData) {
     })
     .then((res) => {
       console.log(res.data);
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.accounts.length; i++) {
+        if (!accNumbers.includes(res.data.accounts[i].accNumber)) {
+          accNumbers.push(res.data.accounts[i].accNumber);
+          accounts.push(res.data.accounts[i]);
+        }
+      }
+      res.data.accounts = accounts;
       setFormData(res.data);
     })
     .catch((err) => console.log(err));

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
 import { registerAdmin } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterAdmin = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +19,19 @@ const RegisterAdmin = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    registerAdmin(formData);
+    if (formData.firstName === '') {
+      toast.warn('Please enter a firstname');
+    } else if (formData.lastName === '') {
+      toast.warn('Please enter a lastname');
+    } else if (formData.password === '') {
+      toast.warn('Please enter password');
+    } else if (formData.mobileNo === '') {
+      toast.warn('Please enter mobile number');
+    } else if (formData.emailId === '') {
+      toast.warn('Please enter email Id');
+    } else {
+      registerAdmin(formData);
+    }
   };
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center">

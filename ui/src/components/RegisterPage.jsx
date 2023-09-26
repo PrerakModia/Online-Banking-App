@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import bgImage from '../assets/5.jpg';
 import { signUpCustomer } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterPage = () => {
   const [page, setPage] = useState(true);
@@ -25,20 +27,32 @@ const RegisterPage = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    signUpCustomer(
-      formData.firstName,
-      formData.lastName,
-      formData.password,
-      formData.mobileNumber,
-      formData.email,
-      formData.aadhar,
-      formData.dob,
-      formData.city,
-      formData.state,
-      formData.salary,
-      formData.isDisabled,
-      formData.occupation
-    );
+    if (formData.dob === '') {
+      toast.warn('Please enter your Date of Birth');
+    } else if (formData.city === '') {
+      toast.warn('Please enter your city');
+    } else if (formData.state === '') {
+      toast.warn('Please enter your state');
+    } else if (formData.salary === '') {
+      toast.warn('Please enter your salary');
+    } else if (formData.occupation === '') {
+      toast.warn('Please enter your occupation');
+    } else {
+      signUpCustomer(
+        formData.firstName,
+        formData.lastName,
+        formData.password,
+        formData.mobileNumber,
+        formData.email,
+        formData.aadhar,
+        formData.dob,
+        formData.city,
+        formData.state,
+        formData.salary,
+        formData.isDisabled,
+        formData.occupation
+      );
+    }
   };
 
   return (
@@ -120,7 +134,24 @@ const RegisterPage = () => {
 
                   <button
                     className="bg-[#6E6D64] rounded-xl text-white py-2 hover:scale-105 duration-300 mb-4"
-                    onClick={() => setPage(!page)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (formData.firstName === '') {
+                        toast.warn('Please enter a firstname');
+                      } else if (formData.lastName === '') {
+                        toast.warn('Please enter a lastname');
+                      } else if (formData.password === '') {
+                        toast.warn('Please enter password');
+                      } else if (formData.mobileNo === '') {
+                        toast.warn('Please enter mobile number');
+                      } else if (formData.email === '') {
+                        toast.warn('Please enter email Id');
+                      } else if (formData.aadhar === '') {
+                        toast.warn('Please enter your Aadhar Number');
+                      } else {
+                        setPage(!page);
+                      }
+                    }}
                   >
                     Next
                   </button>

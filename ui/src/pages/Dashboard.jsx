@@ -34,6 +34,21 @@ const Dashboard = () => {
       setRenderView('adminDetails');
     }
   }, []);
+
+  //fixes changes made to balance, etc throguh functions like withdraw or deposit in different components inside different renderviews of this page
+  useEffect(() => {
+    const customer = window.sessionStorage.getItem('customerId');
+    const admin = window.sessionStorage.getItem('adminId');
+    if (admin == undefined) {
+      setUser('customer');
+      getCustomer(customer, getCustomerDetails);
+    } else {
+      setUser('admin');
+      getAdmin(admin, setAdminDetails);
+    }
+  }, [renderView]);
+
+
   return (
     <>
       <div className="flex flex-row w-screen h-screen">

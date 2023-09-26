@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { transfer } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function FundTransfer(props) {
   const [accounts, setAccounts] = useState([]);
@@ -106,7 +108,17 @@ function FundTransfer(props) {
       <button
         className="bg-[#6E6D64] text-white py-2 hover:scale-105 duration-300 mb-4 mx-5"
         onClick={() => {
-          transfer(transferDetails, props.changeView);
+          if (transferDetails.fromAccountNo === '') {
+            toast.warn('Please select an account to transfer money from.');
+          } else if (transferDetails.toAccountNo === '') {
+            toast.warn('Please enter an account number to transfer money to.');
+          } else if (transferDetails.amount === 0) {
+            toast.warn('Please enter an amount to transfer');
+          } else if (transferDetails.amount > balance) {
+            toast.warn('Please enter an amount less than balance available');
+          } else {
+            transfer(transferDetails, props.changeView);
+          }
         }}
       >
         Transfer

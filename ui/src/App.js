@@ -1,6 +1,8 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
@@ -35,7 +37,7 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <div>
-        {/* <Nav /> */}
+        <ToastContainer autoClose={3000} />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LoginPage />} />
