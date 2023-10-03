@@ -1,6 +1,6 @@
 package com.banking.server.controller;
 
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.junit.jupiter.api.Assertions;
@@ -55,9 +55,10 @@ public class AccountControllerTest {
 		acc.setIfscCode("12345678901");
 		acc.setBranch("ETV Bangalore");
 		acc.setOpeningDate("13-09-2023");
-		acc.setCreditCard(false);
-		acc.setDebitCard(false);
-		acc.setNetBanking(true);
+		acc.setIsCreditCard(false);
+		acc.setIsDebitCard(false);
+		acc.setIsDisabled(true);
+		acc.setIsNetBanking(true);
 		Mockito.when(accountService.addAccount(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn("Account was successfully created!");
 		String json = mapper.writeValueAsString(acc);
 		MvcResult result = mvc.perform(post("/account/create/1").

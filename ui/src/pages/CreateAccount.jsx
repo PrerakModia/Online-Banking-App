@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { getCustomer, getIFSC, createAccount } from "../utils/auth";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function CreateAccount() {
+export default function CreateAccount(props) {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     customerId: "",
     date: "",
     address: "",
     ifsc: "",
     branch: "",
-    type: "",
+    type: "current",
     credit: false,
     debit: false,
     netBanking: false,
@@ -24,151 +24,215 @@ export default function CreateAccount() {
     getCustomer(data, setFormData);
   }, []);
 
-  const changeAccountType = (e, name) => {
-    console.log(e.target.checked);
+  const changeAccountType = (name) => {
     console.log(name);
-    if (e.target.checked) setFormData((prev) => ({ ...prev, type: name }));
-    else setFormData((prev) => ({ ...prev, type: "" }));
-  };
-
-  const handleCardOptions = (e, option) => {
-    setFormData((prev) => ({ ...prev, [option]: e.target.checked }));
-  };
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, address: e.target.value }));
+    setFormData((prev) => ({ ...prev, type: name }));
   };
 
   const handleBlur = (e) => {
+    setFormData((prev) => ({ ...prev, address: e.target.value }));
     getIFSC(e.target.value, setFormData);
   };
 
   return (
-    <div className="main_container">
-      <h1>Please Fill the Below Fields to Create Account</h1>
-      <form>
-        <TextField
-          id="outlined-basic"
-          sx={{ p: 2 }}
-          variant="outlined"
-          type="text"
-          value={formData.name}
-          placeholder="Enter your Name"
-          required
-          // disabled={true}
-        />
-        <br />
-        <TextField
-          // disabled={true}
-          id="outlined-basic"
-          sx={{ p: 2 }}
-          variant="outlined"
-          type="text"
-          value={formData.customerId}
-          placeholder="Enter your Customer_ID"
-          required
-        />
-        <br />
-        <TextField
-          size="large"
-          id="outlined-basic"
-          sx={{ p: 2 }}
-          variant="outlined"
-          type="text"
-          placeholder="Enter Address"
-          required
-          onChange={(e) => handleChange(e)}
-          onBlur={handleBlur}
-        />
-        <br />
-        <TextField
-          id="outlined-basic"
-          sx={{ p: 2 }}
-          variant="outlined"
-          type="text"
-          placeholder="Enter your IFSC_Code"
-          required
-          value={formData.ifsc}
-        />
-        <br />
-        <TextField
-          id="outlined-basic"
-          sx={{ p: 2 }}
-          variant="outlined"
-          type="text"
-          placeholder="Enter your Branch"
-          required
-          value={formData.branch}
-        />
-        <br />
-        <TextField
-          id="outlined-basic"
-          sx={{ p: 2 }}
-          variant="outlined"
-          type="text"
-          placeholder="Enter Opening Date"
-          required
-          value={formData.date}
-        />
-        <br />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Salary Account"
-          onChange={(e) => {
-            changeAccountType(e, "salary");
-          }}
-        />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Current Account"
-          onChange={(e) => {
-            changeAccountType(e, "current");
-          }}
-        />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Savings Account"
-          onChange={(e) => {
-            changeAccountType(e, "savings");
-          }}
-        />
-        <br />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Credit Card"
-          onChange={(e) => {
-            handleCardOptions(e, "credit");
-          }}
-        />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Debit Card"
-          onChange={(e) => {
-            handleCardOptions(e, "debit");
-          }}
-        />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="NetBanking"
-          onChange={(e) => {
-            handleCardOptions(e, "netBanking");
-          }}
-        />
-        <br />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="I have read the terms and conditions"
-        />
-        <br />
-        <Button
-          variant="contained"
-          onClick={() => {
-            createAccount(formData);
+    <div
+      className="h-screen w-screen flex flex-row"
+      style={{ borderLeft: "1.5px solid black" }}
+    >
+      <div className="px-5">
+        <div className="my-7 flex flex-row gap-2">
+          <AiOutlineArrowLeft
+            className="mt-2 hover:scale-150"
+            onClick={() => {
+              props.changeView("accountDetails");
+            }}
+          />
+          <div className="font-semibold text-xl">Create Account</div>
+        </div>
+        <form class="w-full max-w-lg">
+          <div class="flex flex-wrap -mx-3 mb-3 mt-7">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-first-name"
+              >
+                First Name
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Jane"
+                value={formData.firstName}
+              />
+              {/* <p class="text-red-500 text-xs italic">
+                Please fill out this field.
+              </p> */}
+            </div>
+            <div class="w-full md:w-1/2 px-3">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-last-name"
+              >
+                Last Name
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-last-name"
+                type="text"
+                value={formData.lastName}
+                placeholder="Doe"
+              />
+            </div>
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-3">
+            <div class="w-full px-3">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-password"
+              >
+                Address
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-address"
+                type="text"
+                placeholder="Address"
+                onBlur={handleBlur}
+              />
+            </div>
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-customerId"
+              >
+                Customer ID
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-customerId"
+                type="number"
+                placeholder="CustomerId"
+                value={formData.customerId}
+              />
+            </div>
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-branch"
+              >
+                Branch
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-branch"
+                type="text"
+                placeholder="Ex. ETV"
+                value={formData.branch}
+              />
+            </div>
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-IFSC"
+              >
+                IFSC
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-IFSC"
+                type="text"
+                placeholder="Ex. SBIN0000544"
+                value={formData.ifsc}
+              />
+            </div>
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-accType"
+              >
+                Select Account Type
+              </label>
+              <div class="relative">
+                <select
+                  class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-accType"
+                  onChange={(e) => changeAccountType(e.target.value)}
+                  value={formData.type}
+                >
+                  <option value="current">Current</option>
+                  <option value="savings">Savings</option>
+                  <option value="salary">Salary</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    class="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="grid-openingDate"
+              >
+                Opening Date
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-openingDate"
+                type="text"
+                placeholder="Ex. 12-03-2000"
+                value={formData.date}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, date: e.target.value }))
+                }
+              />
+            </div>
+          </div>
+          <div></div>
+        </form>
+        <button
+          className="bg-transparent hover:bg-black hover:text-white text-black font-semibold mt-4 py-2 px-4 border border-black hover:border-transparent rounded"
+          onClick={(e) => {
+            e.preventDefault();
+            console.log(formData.address);
+            if (formData.firstName === "") {
+              toast.warn("Please enter your first name");
+            } else if (formData.lastName === "") {
+              toast.warn("Please enter your last name");
+            } else if (
+              formData.address === "" ||
+              formData.address === undefined
+            ) {
+              toast.warn("Please enter your address");
+            } else if (formData.customerId === "") {
+              toast.warn("Please enter your customer Id");
+            } else if (
+              formData.branch === "" ||
+              formData.branch === undefined
+            ) {
+              toast.warn("Please enter your nearest branch");
+            } else if (formData.ifsc === "" || formData.ifsc === undefined) {
+              toast.warn("Please enter your nearest branch's isfc code");
+            } else if (formData.date === "" || formData.date === undefined) {
+              toast.warn("Please enter today's date");
+            } else {
+              createAccount(formData, props.changeView);
+            }
           }}
         >
-          Submit
-        </Button>
-      </form>
+          Create Account
+        </button>
+      </div>
     </div>
   );
 }

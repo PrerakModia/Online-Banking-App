@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import com.banking.server.Exceptions.AccountNotFound;
+import com.banking.server.Exceptions.CustomerNotFound;
+import com.banking.server.Exceptions.TransactionDeclinedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,25 +39,20 @@ public class AccountService {
 	@Autowired
 	private TransactionRepository transactionRepository;
 	
-	public String addAccount(Account account, Long customerId) {
+	public String addAccount(Account account, Long customerId) throws CustomerNotFound {
 		try {
 			long id = accountIdGenerator();
 			account.setAccNumber(id);
 			Customer c = customerRepository.findById(customerId).get();
 			account.setCustomer(c);
-//			System.out.println(account);
-//			List<Account> accounts = c.getAccounts();
-//			accounts.add(account);
-//			c.setAccounts(accounts);
-//			customerRepository.save(c);
 			Account response = accountRepository.save(account);
 			if(response != null) {
 				return "Account was successfully created!";
 			} else {
-				return "An Error occurred while creating the account";
+				throw new CustomerNotFound("Customer Not Found or error creating the account.");
 			} 
 		} catch (Exception E) {
-			return E.getMessage();
+			throw new CustomerNotFound("Customer Not Found or error creating the account.");
 		}
 	}
 	
@@ -84,25 +82,26 @@ public class AccountService {
 		}
 	}
 	
-	public ResponseEntity<List<Transaction>> getTransactions(Long accId){
+	public ResponseEntity<List<Transaction>> getTransactions(Long accId) throws AccountNotFound {
 		Account acc = getAccount(accId);
-		if(acc==null) return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+		if(acc==null) throw new AccountNotFound("Unable to find the account");
 		return new ResponseEntity<>(acc.getTransactions(),HttpStatus.OK);
 	}
 	
 	
 	@Transactional
-	public String withdraw(WithdrawModel model) {
+	public String withdraw(WithdrawModel model) throws TransactionDeclinedException {
+		System.out.println(model.toString());
 		String result = "";
 		Account account = accountRepository.findById(model.getAccNumber()).get();
 		if(account.getBalance()-model.getAmount()<0)
-			result = "Transaction Failed due to insufficient balance";
+			throw new TransactionDeclinedException("Transaction Failed due to insufficient balance");
 		else {
 			int rowsAffected = accountRepository.withdraw(model.getAmount(), model.getAccNumber());
 			if(rowsAffected>0)
 				result = "Transaction Success";
 			else
-				result = "Transaction Failed";
+				throw new TransactionDeclinedException("Transaction Failed");
 		}
 		Transaction transaction = new Transaction();
 		transaction.setAccount(account);
@@ -117,14 +116,14 @@ public class AccountService {
 	}
 	
 	@Transactional
-	public String deposit(WithdrawModel model) {
+	public String deposit(WithdrawModel model) throws TransactionDeclinedException{
 		String result = "";
 		Account account = accountRepository.findById(model.getAccNumber()).get();
 		int rowsAffected = accountRepository.deposit(model.getAmount(), model.getAccNumber());
 		if(rowsAffected>0)
 			result = "Transaction Success";
-		else 
-			result = "Transaction Failed";
+		else
+			throw new TransactionDeclinedException("Transaction Failed");
 		Transaction transaction = new Transaction();
 		transaction.setAccount(account);
 		transaction.setAmount(model.getAmount());
@@ -138,23 +137,23 @@ public class AccountService {
 	}
 	
 	@Transactional
-	public String fundTransfer(FundTransferModel model) {
+	public String fundTransfer(FundTransferModel model) throws TransactionDeclinedException{
 		String result = "";
 		Account debitAccount = accountRepository.findById(model.getFromAccountNo()).get();
 		Optional<Account> creditAccount = accountRepository.findById(model.getToAccountNo());
 		System.out.println(creditAccount);
 		if(!creditAccount.isPresent())
-			result = "Receivers account Not Found";
+			throw new TransactionDeclinedException("Receivers account doesn't exist");
 		else {
 			if(debitAccount.getBalance()-model.getAmount() < 0)
-				result = "Transaction Failed due to insufficient Balance";
+				throw new TransactionDeclinedException("Transaction Failed due to insufficient Balance");
 			else {
 				int debitRows = accountRepository.withdraw(model.getAmount(), model.getFromAccountNo());
 				int creditRows = accountRepository.deposit(model.getAmount(), model.getToAccountNo());
 				if(debitRows>0 && creditRows >0)
 					result = "Transaction Success";
 				else
-					result = "Transaction Failed";
+					throw new TransactionDeclinedException("Transaction Failed");
 			}
 		}
 		//SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy.HH:mm:ss");

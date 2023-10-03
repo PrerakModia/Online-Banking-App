@@ -1,5 +1,5 @@
-import Axios from "axios";
+import Axios from 'axios';
 
 export default Axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: 'http://localhost:8080',
 });

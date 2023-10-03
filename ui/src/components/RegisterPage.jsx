@@ -1,21 +1,24 @@
-import { useState } from "react";
-import bgImage from "../assets/5.jpg";
-import { signUpCustomer } from "../utils/auth";
+import { useState } from 'react';
+import bgImage from '../assets/5.jpg';
+import { signUpCustomer } from '../utils/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterPage = () => {
   const [page, setPage] = useState(true);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    password: "",
-    mobileNumber: "",
-    email: "",
-    aadhar: "",
-    dob: "",
-    city: "",
-    state: "",
-    salary: "",
-    occupation: "",
+    firstName: '',
+    lastName: '',
+    password: '',
+    mobileNumber: '',
+    email: '',
+    aadhar: '',
+    dob: '',
+    city: '',
+    state: '',
+    salary: '',
+    occupation: '',
+    isDisabled: false,
   });
 
   const changeHandler = (e, name) => {
@@ -24,19 +27,32 @@ const RegisterPage = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    signUpCustomer(
-      formData.firstName,
-      formData.lastName,
-      formData.password,
-      formData.mobileNumber,
-      formData.email,
-      formData.aadhar,
-      formData.dob,
-      formData.city,
-      formData.state,
-      formData.salary,
-      formData.occupation
-    );
+    if (formData.dob === '') {
+      toast.warn('Please enter your Date of Birth');
+    } else if (formData.city === '') {
+      toast.warn('Please enter your city');
+    } else if (formData.state === '') {
+      toast.warn('Please enter your state');
+    } else if (formData.salary === '') {
+      toast.warn('Please enter your salary');
+    } else if (formData.occupation === '') {
+      toast.warn('Please enter your occupation');
+    } else {
+      signUpCustomer(
+        formData.firstName,
+        formData.lastName,
+        formData.password,
+        formData.mobileNumber,
+        formData.email,
+        formData.aadhar,
+        formData.dob,
+        formData.city,
+        formData.state,
+        formData.salary,
+        formData.isDisabled,
+        formData.occupation
+      );
+    }
   };
 
   return (
@@ -58,7 +74,7 @@ const RegisterPage = () => {
                       name="firstName"
                       placeholder="First Name"
                       value={formData.firstName}
-                      onChange={(e) => changeHandler(e, "firstName")}
+                      onChange={(e) => changeHandler(e, 'firstName')}
                     />
                     <input
                       className="p-2 mt-8 rounded-xl borders w-1/2"
@@ -66,7 +82,7 @@ const RegisterPage = () => {
                       name="lastName"
                       placeholder="Last Name"
                       value={formData.lastName}
-                      onChange={(e) => changeHandler(e, "lastName")}
+                      onChange={(e) => changeHandler(e, 'lastName')}
                     />
                   </div>
                   <div className="relative">
@@ -76,7 +92,7 @@ const RegisterPage = () => {
                       name="password"
                       placeholder="Password"
                       value={formData.password}
-                      onChange={(e) => changeHandler(e, "password")}
+                      onChange={(e) => changeHandler(e, 'password')}
                     />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +113,7 @@ const RegisterPage = () => {
                     name="mobile"
                     placeholder="Mobile Number"
                     value={formData.mobileNumber}
-                    onChange={(e) => changeHandler(e, "mobileNumber")}
+                    onChange={(e) => changeHandler(e, 'mobileNumber')}
                   />
                   <input
                     className="p-2 rounded-xl borders"
@@ -105,7 +121,7 @@ const RegisterPage = () => {
                     name="email"
                     placeholder="Email Address"
                     value={formData.email}
-                    onChange={(e) => changeHandler(e, "email")}
+                    onChange={(e) => changeHandler(e, 'email')}
                   />
                   <input
                     className="p-2 rounded-xl borders"
@@ -113,12 +129,29 @@ const RegisterPage = () => {
                     name="aadhar"
                     placeholder="Aadhar Number"
                     value={formData.aadhar}
-                    onChange={(e) => changeHandler(e, "aadhar")}
+                    onChange={(e) => changeHandler(e, 'aadhar')}
                   />
 
                   <button
                     className="bg-[#6E6D64] rounded-xl text-white py-2 hover:scale-105 duration-300 mb-4"
-                    onClick={() => setPage(!page)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (formData.firstName === '') {
+                        toast.warn('Please enter a firstname');
+                      } else if (formData.lastName === '') {
+                        toast.warn('Please enter a lastname');
+                      } else if (formData.password === '') {
+                        toast.warn('Please enter password');
+                      } else if (formData.mobileNo === '') {
+                        toast.warn('Please enter mobile number');
+                      } else if (formData.email === '') {
+                        toast.warn('Please enter email Id');
+                      } else if (formData.aadhar === '') {
+                        toast.warn('Please enter your Aadhar Number');
+                      } else {
+                        setPage(!page);
+                      }
+                    }}
                   >
                     Next
                   </button>
@@ -133,7 +166,7 @@ const RegisterPage = () => {
                     name="dob"
                     placeholder="Date of Birth"
                     value={formData.dob}
-                    onChange={(e) => changeHandler(e, "dob")}
+                    onChange={(e) => changeHandler(e, 'dob')}
                   />
 
                   <div className="flex gap-4">
@@ -143,7 +176,7 @@ const RegisterPage = () => {
                       name="city"
                       placeholder="City"
                       value={formData.city}
-                      onChange={(e) => changeHandler(e, "city")}
+                      onChange={(e) => changeHandler(e, 'city')}
                     />
                     <input
                       className="p-2 rounded-xl borders w-1/2"
@@ -151,7 +184,7 @@ const RegisterPage = () => {
                       name="state"
                       placeholder="State"
                       value={formData.state}
-                      onChange={(e) => changeHandler(e, "state")}
+                      onChange={(e) => changeHandler(e, 'state')}
                     />
                   </div>
 
@@ -161,7 +194,7 @@ const RegisterPage = () => {
                     name="salary"
                     placeholder="Salary"
                     value={formData.salary}
-                    onChange={(e) => changeHandler(e, "salary")}
+                    onChange={(e) => changeHandler(e, 'salary')}
                   />
 
                   <input
@@ -170,7 +203,7 @@ const RegisterPage = () => {
                     name="occupation"
                     placeholder="Occupation"
                     value={formData.occupation}
-                    onChange={(e) => changeHandler(e, "occupation")}
+                    onChange={(e) => changeHandler(e, 'occupation')}
                   />
 
                   <div className="flex items-center mb-4">
@@ -203,7 +236,7 @@ const RegisterPage = () => {
               <button
                 className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"
                 onClick={() => {
-                  window.location.assign("/");
+                  window.location.assign('/');
                 }}
               >
                 Log In

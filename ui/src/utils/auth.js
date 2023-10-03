@@ -1,4 +1,7 @@
 import instance from "./configuration";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export async function signUpCustomer(
   firstName,
@@ -11,6 +14,7 @@ export async function signUpCustomer(
   city,
   state,
   salary,
+  isDisabled,
   occupation
 ) {
   const path = "/customer";
@@ -26,17 +30,19 @@ export async function signUpCustomer(
     state,
     salary,
     occupation,
+    isDisabled,
     accounts: [],
   };
-  //const jsonCustomerDets = JSON.stringify(customerDets);
-  const res = await instance
-    .post(path, customerDets, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+  console.log(customerDets);
+  const res = await axios({
+    url: "http://localhost:8080/customer",
+    method: "post",
+    data: customerDets,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
     .then((resp) => {
-      console.log(resp);
       window.sessionStorage.setItem("customerId", resp.data.customerId);
       window.location.assign("/dashboard");
     })
@@ -46,13 +52,27 @@ export async function signUpCustomer(
   return;
 }
 
+export async function registerAdmin(adminDetails) {
+  const path = "/admin";
+  const res = await instance
+    .post(path, adminDetails, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      window.sessionStorage.setItem("adminId", res.data.adminId);
+      window.location.assign("/dashboard");
+    })
+    .catch((err) => console.log(err));
+}
+
 export async function logInCustomer(customerId, password) {
   const path = "/customer/login";
   const loginDets = {
     customerId,
     password,
   };
-  //const jsonLoginDets = JSON.stringify(loginDets);
   const res = await instance
     .post(path, loginDets, {
       headers: {
@@ -61,79 +81,160 @@ export async function logInCustomer(customerId, password) {
     })
     .then((resp) => {
       console.log(resp);
-      // setMessage(resp.data);
       window.sessionStorage.setItem("customerId", customerId);
       window.location.assign("/dashboard");
     })
     .catch((err) => {
+      toast.error(err.response.data.message);
       console.log(err);
-      // setMessage("error===" + err);
     });
-  // setTimeout(() => {
-  //   setMessage("");
-  // }, 5000);
-  return;
+}
+
+export async function logInAdmin(adminId, password) {
+  const path = "/admin/login";
+  const loginDets = {
+    adminId,
+    password,
+  };
+  const res = await instance
+    .post(path, loginDets, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((resp) => {
+      console.log(resp);
+      window.sessionStorage.setItem("adminId", adminId);
+      window.location.assign("/dashboard");
+    })
+    .catch((err) => {
+      toast.error(err.response.data.message);
+      console.log(err);
+    });
 }
 
 export async function getCustomer(customerId, setFormData) {
   const path = `customer/${customerId}`;
-  console.log(path);
+  // console.log(path);
   const res = await instance
     .get(path, {
       headers: { "Content-Type": "application/json" },
     })
     .then((res) => {
-      const date = new Date();
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      let currentDate = `${day}-${month}-${year}`;
-      setFormData({
-        name: res.data.firstName,
-        customerId: customerId,
-        date: currentDate,
-        address: "",
-        ifsc: "",
-        branch: "",
-        type: "",
-        credit: false,
-        debit: false,
-        netBanking: false,
-      });
+      console.log(res.data);
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.accounts.length; i++) {
+        if (!accNumbers.includes(res.data.accounts[i].accNumber)) {
+          accNumbers.push(res.data.accounts[i].accNumber);
+          accounts.push(res.data.accounts[i]);
+        }
+      }
+      res.data.accounts = accounts;
+      setFormData(res.data);
     })
     .catch((err) => console.log(err));
 }
 
-export async function getAccounts(custId,setAccounts) {
+export async function getAdmin(adminId, setFormData) {
+  const path = `admin/${adminId}`;
+  const res = await instance
+    .get(path, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      console.log(res.data);
+      setFormData(res.data);
+    })
+    .catch((err) => console.log(err));
+}
+
+export async function getAccounts(custId, setAccounts, setBalance) {
   const path = `customer/accounts/${custId}`;
-  const res = await instance.get(path,{
-    headers: { "Content-Type": "application/json" }
-  })
-  .then((res)=>{
-    var accNumbers = [];
-    var accounts = [];
-    for(var i=0;i<res.data.length;i++){
-      if(!accNumbers.includes(res.data[i].accNumber)){
-        accNumbers.push(res.data[i].accNumber);
-        accounts.push(res.data[i]);
+  const res = await instance
+    .get(path, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      var accNumbers = [];
+      var accounts = [];
+      var balance = 0;
+      for (var i = 0; i < res.data.length; i++) {
+        if (!accNumbers.includes(res.data[i].accNumber)) {
+          accNumbers.push(res.data[i].accNumber);
+          accounts.push(res.data[i]);
+          balance += res.data[i].balance;
+        }
       }
-    }
-    setAccounts(accounts);
-  })
+      setBalance(balance);
+      setAccounts(accounts);
+    });
 }
 
-export async function getTransactions(accId,setTransactions) {
+export async function getPendingAccounts(setAccounts) {
+  const path = `admin/pendingAccounts`;
+  const res = await instance
+    .get(path, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (!accNumbers.includes(res.data[i].accNumber)) {
+          accNumbers.push(res.data[i].accNumber);
+          accounts.push(res.data[i]);
+        }
+      }
+      console.log(accounts);
+      setAccounts(accounts);
+    });
+}
+
+export async function getApprovedAccounts(setAccounts) {
+  const path = `admin/approvedAccounts`;
+  const res = await instance
+    .get(path, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      var accNumbers = [];
+      var accounts = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (!accNumbers.includes(res.data[i].accNumber)) {
+          accNumbers.push(res.data[i].accNumber);
+          accounts.push(res.data[i]);
+        }
+      }
+      console.log(accounts);
+      setAccounts(accounts);
+    });
+}
+
+export async function getCustomerTransactions(customerId, setForm) {
+  const path = `customer/allTransactions/${customerId}`;
+  const res = await instance
+    .get(path, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      console.log(res);
+      setForm(res.data);
+    })
+    .catch((err) => console.log(err));
+}
+
+export async function getTransactions(accId, setTransactions) {
   const path = `account/transactions/${accId}`;
-  const res = await instance.get(path,{
-    headers: { "Content-Type": "application/json" }
-  })
-  .then((res)=>{
-    setTransactions(res.data);
-    console.log(res);
-  })
+  const res = await instance
+    .get(path, {
+      headers: { "Content-Type": "application/json" },
+    })
+    .then((res) => {
+      setTransactions(res.data);
+      console.log(res);
+    });
 }
-
-
 
 export async function getIFSC(address, setFormData) {
   const path = `account/${address}`;
@@ -151,8 +252,8 @@ export async function getIFSC(address, setFormData) {
     .catch((err) => console.log(err));
 }
 
-export async function createAccount(formData) {
-  const path = `account/create/1`;
+export async function createAccount(formData, changeView) {
+  const path = `account/create/${formData.customerId}`;
   console.log(path);
   const accountDetails = {
     accNumber: "",
@@ -161,15 +262,118 @@ export async function createAccount(formData) {
     ifscCode: formData.ifsc,
     branch: formData.branch,
     openingDate: formData.date,
-    isCreditCard: formData.credit,
-    isDebitCard: formData.debit,
-    isNetBanking: formData.netBanking,
+    isCreditCard: true,
+    isDebitCard: false,
+    isNetBanking: true,
+    isDisabled: true,
   };
   console.log(accountDetails);
   const res = await instance
     .post(path, accountDetails, {
       headers: { "Content-Type": "application/json" },
     })
-    .then((res) => console.log(res))
+    .then((res) => changeView("accountDetails"))
+    .catch((err) => console.log(err));
+}
+
+export const approveAccount = async (accNo, refresh) => {
+  const res = await axios({
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: `http://localhost:8080/admin/toggleAccount/${accNo}`,
+  })
+    .then((res) => {
+      console.log(res);
+      refresh(Math.random());
+    })
+    .catch((err) => console.log(err));
+};
+
+export const withdraw = async (withdraw, changeView) => {
+  console.log(withdraw);
+  const res = await axios({
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "http://localhost:8080/account/withdraw",
+    data: withdraw,
+  })
+    .then((res) => {
+      console.log(res);
+      changeView("accountDetails");
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deposit = async (deposit, changeView) => {
+  console.log(deposit);
+  const res = await axios({
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "http://localhost:8080/account/deposit",
+    data: deposit,
+  })
+    .then((res) => {
+      console.log(res);
+      changeView("accountDetails");
+    })
+    .catch((err) => console.log(err));
+};
+
+export const transfer = async (fundTransfer, changeView) => {
+  console.log(deposit);
+  const res = await axios({
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "http://localhost:8080/account/fundTransfer",
+    data: fundTransfer,
+  })
+    .then((res) => {
+      console.log(res);
+      changeView("accountDetails");
+    })
+    .catch((err) => console.log(err));
+};
+
+export const resetPassword = async (otp, customerId, password) => {
+  const res = await axios({
+    method: "put",
+    url: `http://localhost:8080/customer/resetPassword/${otp}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      customerId,
+      password,
+    },
+  })
+    .then((res) => {
+      console.log(res);
+      window.location.assign("/");
+    })
+    .catch((err) => console.log(err));
+};
+
+export function getStatement(accountNo, fromDate, toDate, setData) {
+  const res = axios({
+    method: "post",
+    url: "http://localhost:8080/accountStatement",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      accountNo,
+      fromDate,
+      toDate,
+    },
+  })
+    .then((res) => setData(res.data))
     .catch((err) => console.log(err));
 }

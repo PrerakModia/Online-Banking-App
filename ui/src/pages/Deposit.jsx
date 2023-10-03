@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { withdraw } from '../utils/auth';
+import { deposit } from '../utils/auth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Withdraw(props) {
+function Deposit(props) {
   const [accounts, setAccounts] = useState([]);
-  const [balance, setBalance] = useState(0);
   const [display, setDisplay] = useState(false);
-  const [withdrawDetails, setWithdrawDetails] = useState({
+  const [depositDetails, setDepositDetails] = useState({
     accNumber: '',
     amount: 0,
   });
@@ -30,7 +29,7 @@ function Withdraw(props) {
             props.changeView('accountDetails');
           }}
         />
-        <div className="font-semibold text-xl">Withdraw Money</div>
+        <div className="font-semibold text-xl">Deposit Money</div>
       </div>
       <div className="mx-5 my-2">
         <label
@@ -43,8 +42,7 @@ function Withdraw(props) {
           onChange={(e) => {
             accounts.forEach((item) => {
               if (item.accNumber == e.target.value) {
-                setBalance(item.balance);
-                setWithdrawDetails((prev) => ({
+                setDepositDetails((prev) => ({
                   ...prev,
                   accNumber: item.accNumber,
                 }));
@@ -62,9 +60,6 @@ function Withdraw(props) {
         </select>
       </div>
       {display && (
-        <div className="mx-5 my-2 font-semibold">{`Balance Remaing: $${balance}`}</div>
-      )}
-      {display && (
         <div className="mx-5 my-2">
           <label
             for="amount"
@@ -76,7 +71,7 @@ function Withdraw(props) {
             id="amount"
             className="border border-gray-500 w-full p-2.5"
             onChange={(e) =>
-              setWithdrawDetails((prev) => ({
+              setDepositDetails((prev) => ({
                 ...prev,
                 amount: parseInt(e.target.value),
               }))
@@ -88,21 +83,19 @@ function Withdraw(props) {
         className="bg-[#6E6D64] text-white py-2 hover:scale-105 duration-300 mb-4 mx-5"
         onClick={(e) => {
           e.preventDefault();
-          if (withdrawDetails.accNumber === '') {
-            toast.warn('Please select a account to withdraw money from.');
-          } else if (withdrawDetails.amount === 0) {
-            toast.warn('Please enter an amount to withdraw');
-          } else if (withdrawDetails.amount > balance) {
-            toast.warn('Please enter an amount less than balance available');
+          if (depositDetails.accNumber === '') {
+            toast.warn('Please select a account to deposit money into.');
+          } else if (depositDetails.amount === 0) {
+            toast.warn('Please enter an amount to deposit');
           } else {
-            withdraw(withdrawDetails, props.changeView);
+            deposit(depositDetails, props.changeView);
           }
         }}
       >
-        Withdraw
+        Deposit
       </button>
     </div>
   );
 }
 
-export default Withdraw;
+export default Deposit;

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { withdraw } from '../utils/auth';
+import { transfer } from '../utils/auth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Withdraw(props) {
+function FundTransfer(props) {
   const [accounts, setAccounts] = useState([]);
   const [balance, setBalance] = useState(0);
   const [display, setDisplay] = useState(false);
-  const [withdrawDetails, setWithdrawDetails] = useState({
-    accNumber: '',
+  const [transferDetails, setTransferDetails] = useState({
+    fromAccountNo: '',
+    toAccountNo: '',
     amount: 0,
   });
 
@@ -30,7 +31,7 @@ function Withdraw(props) {
             props.changeView('accountDetails');
           }}
         />
-        <div className="font-semibold text-xl">Withdraw Money</div>
+        <div className="font-semibold text-xl">Transfer Money</div>
       </div>
       <div className="mx-5 my-2">
         <label
@@ -44,9 +45,9 @@ function Withdraw(props) {
             accounts.forEach((item) => {
               if (item.accNumber == e.target.value) {
                 setBalance(item.balance);
-                setWithdrawDetails((prev) => ({
+                setTransferDetails((prev) => ({
                   ...prev,
-                  accNumber: item.accNumber,
+                  fromAccountNo: item.accNumber,
                 }));
                 setDisplay(true);
               }
@@ -67,16 +68,36 @@ function Withdraw(props) {
       {display && (
         <div className="mx-5 my-2">
           <label
+            for="receiver"
+            class="block mb-2 text-base font-semibold text-gray-900 dark:text-white"
+          >
+            Enter the Receiver Account Number:
+          </label>
+          <input
+            id="receiver"
+            className="border border-gray-500 w-full p-2.5"
+            onChange={(e) =>
+              setTransferDetails((prev) => ({
+                ...prev,
+                toAccountNo: parseInt(e.target.value),
+              }))
+            }
+          />
+        </div>
+      )}
+      {display && (
+        <div className="mx-5 my-2">
+          <label
             for="amount"
             class="block mb-2 text-base font-semibold text-gray-900 dark:text-white"
           >
-            Enter the Amount:
+            Enter the Amount Number:
           </label>
           <input
             id="amount"
             className="border border-gray-500 w-full p-2.5"
             onChange={(e) =>
-              setWithdrawDetails((prev) => ({
+              setTransferDetails((prev) => ({
                 ...prev,
                 amount: parseInt(e.target.value),
               }))
@@ -86,23 +107,24 @@ function Withdraw(props) {
       )}
       <button
         className="bg-[#6E6D64] text-white py-2 hover:scale-105 duration-300 mb-4 mx-5"
-        onClick={(e) => {
-          e.preventDefault();
-          if (withdrawDetails.accNumber === '') {
-            toast.warn('Please select a account to withdraw money from.');
-          } else if (withdrawDetails.amount === 0) {
-            toast.warn('Please enter an amount to withdraw');
-          } else if (withdrawDetails.amount > balance) {
+        onClick={() => {
+          if (transferDetails.fromAccountNo === '') {
+            toast.warn('Please select an account to transfer money from.');
+          } else if (transferDetails.toAccountNo === '') {
+            toast.warn('Please enter an account number to transfer money to.');
+          } else if (transferDetails.amount === 0) {
+            toast.warn('Please enter an amount to transfer');
+          } else if (transferDetails.amount > balance) {
             toast.warn('Please enter an amount less than balance available');
           } else {
-            withdraw(withdrawDetails, props.changeView);
+            transfer(transferDetails, props.changeView);
           }
         }}
       >
-        Withdraw
+        Transfer
       </button>
     </div>
   );
 }
 
-export default Withdraw;
+export default FundTransfer;

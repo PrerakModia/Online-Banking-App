@@ -1,6 +1,6 @@
 package com.banking.server.controller;
 
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -116,7 +116,7 @@ public class CustomerControllerTest {
 		a.setAccType("savings");
 		a.setBalance(200.00);
 		a.setBranch("Banglore");
-		a.setDisabled(false);
+		a.setIsDisabled(false);
 		a.setIfscCode("5675");
 		a.setOpeningDate("23-06-2023");
 		List l = new ArrayList();

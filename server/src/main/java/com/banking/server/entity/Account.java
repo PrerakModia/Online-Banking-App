@@ -37,13 +37,13 @@ public class Account {
 	@NonNull
 	private String openingDate;
 	
-	private boolean isCreditCard;
+	private Boolean isCreditCard;
 	
-	private boolean isDebitCard;
+	private Boolean isDebitCard;
 	
-	private boolean isNetBanking;
+	private Boolean isNetBanking;
 	@NonNull
-	private boolean isDisabled;
+	private Boolean isDisabled;
 	
 	
 	@JsonManagedReference
