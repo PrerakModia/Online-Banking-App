@@ -1,16 +1,16 @@
-import { HiOutlineQuestionMarkCircle } from 'react-icons/hi2';
-import InboxIcon from '@mui/icons-material/Add';
-import Delete from '@mui/icons-material/Delete';
-import Receipt from '@mui/icons-material/ReceiptLong';
-import { BsToggleOn } from 'react-icons/bs';
+import { HiOutlineQuestionMarkCircle } from "react-icons/hi2";
+import InboxIcon from "@mui/icons-material/Add";
+import Delete from "@mui/icons-material/Delete";
+import Receipt from "@mui/icons-material/ReceiptLong";
+import { BsToggleOn } from "react-icons/bs";
 import {
   MdOutlineAccountBalanceWallet,
   MdOutlineAccountBox,
-} from 'react-icons/md';
+} from "react-icons/md";
 
 export const navLinks = [
   {
-    name: 'Dashboard',
+    name: "Dashboard",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ export const navLinks = [
     ),
   },
   {
-    name: 'Create Account',
+    name: "Create Account",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +43,8 @@ export const navLinks = [
     ),
   },
   {
-    name: 'Account Statement',
-    link: '/transaction',
+    name: "Account Statement",
+    link: "/transaction",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -60,20 +60,20 @@ export const navLinks = [
       </svg>
     ),
   },
-  { name: 'All Transactions', icon: <MdOutlineAccountBalanceWallet /> },
+  { name: "All Transactions", icon: <MdOutlineAccountBalanceWallet /> },
 ];
 
 export const adminLinks = [
-  { name: 'Add User', icon: <InboxIcon /> },
-  { name: 'Delete User', icon: <Delete /> },
-  { name: 'View Transactions', icon: <Receipt /> },
-  { name: 'Toggle Accounts', icon: <BsToggleOn /> },
-  { name: 'Customer Accounts', icon: <MdOutlineAccountBox /> },
+  // { name: 'Add User', icon: <InboxIcon /> },
+  // { name: 'Delete User', icon: <Delete /> },
+  // { name: 'View Transactions', icon: <Receipt /> },
+  { name: "Toggle Accounts", icon: <BsToggleOn /> },
+  { name: "Customer Accounts", icon: <MdOutlineAccountBox /> },
 ];
 
 export const bottomLinks = [
   {
-    name: 'Settings',
+    name: "Settings",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ export const bottomLinks = [
     ),
   },
   {
-    name: 'Help and Support',
+    name: "Help and Support",
     icon: <HiOutlineQuestionMarkCircle />,
   },
 ];

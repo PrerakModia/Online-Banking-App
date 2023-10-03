@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -42,7 +42,7 @@ public class TransactionControllerTest {
 	@Test
 	public void getAccountStatementTest() throws Exception {
 		AccountStatementModel model = new AccountStatementModel();
-		model.setAccountNo(12345);
+		model.setAccountNo(495262812340224L);
 		model.setFromDate(new Date());
 		model.setToDate(new Date());
 		List<Transaction> l = new ArrayList();

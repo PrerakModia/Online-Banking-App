@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react';
-import { getAccounts, getCustomerTransactions } from '../utils/auth';
+import { useEffect, useState } from "react";
+import { getAccounts, getCustomerTransactions } from "../utils/auth";
 
 const AccountDetails = (props) => {
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [balance, setBalance] = useState(0);
   useEffect(() => {
-    getAccounts(window.sessionStorage.getItem('customerId'), setAccounts);
+    getAccounts(
+      window.sessionStorage.getItem("customerId"),
+      setAccounts,
+      setBalance
+    );
     getCustomerTransactions(
-      window.sessionStorage.getItem('customerId'),
+      window.sessionStorage.getItem("customerId"),
       setTransactions
     );
   }, []);
@@ -15,18 +20,18 @@ const AccountDetails = (props) => {
   return (
     <div
       className="h-screen w-screen flex flex-col"
-      style={{ borderLeft: '1.5px solid black' }}
+      style={{ borderLeft: "1.5px solid black" }}
     >
       <div className="font-semibold p-5 text-xl">Current Balance</div>
       <div className="flex flex-row gap-3 items-center">
         <div className="font-bold text-6xl px-5 py-2 font-serif">
-          $132,281.15
+          ${balance}
         </div>
         <button
           className="text-black rounded-md hover:scale-105 duration-300 py-1 px-3"
-          style={{ border: '1px solid black', borderRadius: '0.375rem' }}
+          style={{ border: "1px solid black", borderRadius: "0.375rem" }}
           onClick={() => {
-            props.changeView('withdraw');
+            props.changeView("withdraw");
           }}
         >
           Withdraw
@@ -34,16 +39,16 @@ const AccountDetails = (props) => {
         <button
           className="bg-black text-white rounded-md hover:scale-105 duration-300 py-1 px-3"
           onClick={() => {
-            props.changeView('deposit');
+            props.changeView("deposit");
           }}
         >
           Deposit
         </button>
         <button
           className="text-black rounded-md hover:scale-105 duration-300 py-1 px-3"
-          style={{ border: '1px solid black', borderRadius: '0.375rem' }}
+          style={{ border: "1px solid black", borderRadius: "0.375rem" }}
           onClick={() => {
-            props.changeView('fundTransfer');
+            props.changeView("fundTransfer");
           }}
         >
           Fund Transfer
@@ -84,7 +89,7 @@ const AccountDetails = (props) => {
                         {item.accNumber}
                       </th>
                       <td class="px-6 py-4">
-                        {item.accType !== '' ? item.accType : 'savings'}
+                        {item.accType !== "" ? item.accType : "savings"}
                       </td>
                       <td class="px-6 py-4">{item.openingDate}</td>
                     </tr>
@@ -125,7 +130,7 @@ const AccountDetails = (props) => {
                         {item.accNumber}
                       </th>
                       <td class="px-6 py-4">
-                        {item.accType !== '' ? item.accType : 'savings'}
+                        {item.accType !== "" ? item.accType : "savings"}
                       </td>
                       <td class="px-6 py-4">18-09-2023</td>
                     </tr>

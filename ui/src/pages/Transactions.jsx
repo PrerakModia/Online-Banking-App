@@ -28,6 +28,7 @@ const Transactions = () => {
   const [accounts, setAccounts] = useState([]);
   const [selectedAccNo, setSelectedAccNo] = useState(-1);
   const [transactions, setTransactions] = useState([]);
+  const [a, sA] = useState();
 
   const handleChange = (event) => {
     setSelectedAccNo(event.target.value);
@@ -40,18 +41,18 @@ const Transactions = () => {
     );
   };
 
-  useEffect(()=>{
-    if(selectedAccNo!=-1)
+  useEffect(() => {
+    if (selectedAccNo != -1)
       getStatement(
         selectedAccNo,
         value.startDate,
         value.endDate,
         setTransactions
       );
-  },[value]);
+  }, [value]);
 
   useEffect(() => {
-    getAccounts(window.sessionStorage.getItem("customerId"), setAccounts);
+    getAccounts(window.sessionStorage.getItem("customerId"), setAccounts, sA);
   }, []);
 
   return (
